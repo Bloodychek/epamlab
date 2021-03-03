@@ -1,5 +1,4 @@
 package by.gsu.epamlab;
-import java.util.Arrays;
 
 public class Main {
 
@@ -13,24 +12,24 @@ public class Main {
                 new BusinessTrip()
         };
 
-        for (BusinessTrip b: businessTrips) {
-            if(b != null){
-                b.show();
+        for (BusinessTrip trip: businessTrips) {
+            if(trip != null){
+                trip.show();
             }
         }
         BusinessTrip maxTrip = new BusinessTrip();
-        for (BusinessTrip j:
+        for (BusinessTrip trip:
              businessTrips) {
-            if(j != null && maxTrip.getTotal() < j.getTotal()) {
-                maxTrip = j;
+            if(trip != null && maxTrip.getTotal() < trip.getTotal()) {
+                maxTrip = trip;
             }
         }
+        System.out.println("Trip with maximum cost:");
         maxTrip.show();
 
-        businessTrips[4].setTransportationExpenses(55);
+        businessTrips[businessTrips.length - 1].setTransportationExpenses(55);
 
-        System.out.println(businessTrips[0].getCount_day());
-        System.out.println( businessTrips[1].getCount_day());
+        System.out.println("Duration = " + (businessTrips[0].getCount_day() + businessTrips[1].getCount_day()));
 
         for (BusinessTrip trip: businessTrips) {
             System.out.println(trip);

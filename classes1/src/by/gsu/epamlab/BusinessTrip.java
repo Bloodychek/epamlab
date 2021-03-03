@@ -3,24 +3,24 @@ package by.gsu.epamlab;
 public class BusinessTrip {
 
     private final static int RATE = 120;
-    private int count_day;
+    private int dayCount;
     private String account;
     private int transportationExpenses;
 
     public BusinessTrip(){}
 
     public BusinessTrip(int count_day, String account, int transportationExpenses){
-        this.count_day = count_day;
+        this.dayCount = count_day;
         this.account = account;
         this.transportationExpenses = transportationExpenses;
     }
 
     public int getCount_day() {
-        return count_day;
+        return dayCount;
     }
 
     public void setCount_day(int count_day) {
-        this.count_day = count_day;
+        this.dayCount = count_day;
     }
 
     public String getAccount() {
@@ -41,7 +41,7 @@ public class BusinessTrip {
 
     public int getTotal()
     {
-        return count_day * RATE + transportationExpenses;
+        return dayCount * RATE + transportationExpenses;
     }
 
     public void show()
@@ -49,20 +49,18 @@ public class BusinessTrip {
         System.out.println("RATE = " + RATE);
         System.out.println("account = " + account);
         System.out.println("transportationExpenses = " + transportationExpenses);
-        System.out.println("count_day = " + count_day);
-        System.out.println("total = " + rounding(getTotal()));
+        System.out.println("count_day = " + dayCount);
+        System.out.println("total = " + moneyToString(getTotal()));
     }
 
-    public String rounding(int money)
+    public String moneyToString(int money)
     {
-        return String.format("%d.%2d", money/100, money%100);
+        return String.format("%d.%02d", money/100, money%100);
     }
 
     @Override
     public String toString() {
-        return  "account = " + account + ";" +
-                " transportationExpenses = " + transportationExpenses + ";" +
-                " count_day = " + count_day + ";" +
-                " total = " + rounding(getTotal());
+        return  "account = " + account + "; transportationExpenses = " + moneyToString(transportationExpenses) + "; " +
+                "count_day = " + moneyToString(dayCount) + "; total = " + moneyToString(getTotal());
     }
 }
