@@ -61,6 +61,6 @@ public class BusinessTrip {
     @Override
     public String toString() {
         return  account + ";" + moneyToString(transportationExpenses) + ";" +
-                ";" + moneyToString(dayCount) + ";" + moneyToString(getTotal());
+                moneyToString(dayCount) + ";" + moneyToString(getTotal());
     }
 }
