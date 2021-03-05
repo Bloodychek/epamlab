@@ -9,18 +9,18 @@ public class BusinessTrip {
 
     public BusinessTrip(){}
 
-    public BusinessTrip(int count_day, String account, int transportationExpenses){
-        this.dayCount = count_day;
+    public BusinessTrip(int dayCount, String account, int transportationExpenses){
+        this.dayCount = dayCount;
         this.account = account;
         this.transportationExpenses = transportationExpenses;
     }
 
-    public int getCount_day() {
+    public int getDayCount() {
         return dayCount;
     }
 
-    public void setCount_day(int count_day) {
-        this.dayCount = count_day;
+    public void setDayCount(int dayCount) {
+        this.dayCount = dayCount;
     }
 
     public String getAccount() {
@@ -49,7 +49,7 @@ public class BusinessTrip {
         System.out.println("RATE = " + moneyToString(RATE));
         System.out.println("account = " + account);
         System.out.println("transportationExpenses = " + moneyToString(transportationExpenses));
-        System.out.println("count_day = " + dayCount);
+        System.out.println("dayCount = " + dayCount);
         System.out.println("total = " + moneyToString(getTotal()));
     }
 
@@ -60,7 +60,7 @@ public class BusinessTrip {
 
     @Override
     public String toString() {
-        return  "account = " + account + "; transportationExpenses = " + moneyToString(transportationExpenses) + "; " +
-                "count_day = " + moneyToString(dayCount) + "; total = " + moneyToString(getTotal());
+        return  account + ";" + moneyToString(transportationExpenses) + ";" +
+                ";" + moneyToString(dayCount) + ";" + moneyToString(getTotal());
     }
 }

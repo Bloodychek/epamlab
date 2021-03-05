@@ -25,12 +25,12 @@ public class Main {
                 maxTrip = trip;
             }
         }
-        System.out.println("Trip with maximum cost:");
+        System.out.println("Trip with maximum cost: ");
         maxTrip.show();
 
         businessTrips[businessTrips.length - 1].setTransportationExpenses(55);
 
-        System.out.println("Duration = " + (businessTrips[0].getCount_day() + businessTrips[1].getCount_day()));
+        System.out.println("Duration = " + (businessTrips[0].getDayCount() + businessTrips[1].getDayCount()));
 
         for (BusinessTrip trip: businessTrips) {
             System.out.println(trip);
