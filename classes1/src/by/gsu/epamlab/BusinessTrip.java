@@ -46,9 +46,9 @@ public class BusinessTrip {
 
     public void show()
     {
-        System.out.println("RATE = " + RATE);
+        System.out.println("RATE = " + moneyToString(RATE));
         System.out.println("account = " + account);
-        System.out.println("transportationExpenses = " + transportationExpenses);
+        System.out.println("transportationExpenses = " + moneyToString(transportationExpenses));
         System.out.println("count_day = " + dayCount);
         System.out.println("total = " + moneyToString(getTotal()));
     }

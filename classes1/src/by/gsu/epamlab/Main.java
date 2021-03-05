@@ -17,6 +17,7 @@ public class Main {
                 trip.show();
             }
         }
+
         BusinessTrip maxTrip = new BusinessTrip();
         for (BusinessTrip trip:
              businessTrips) {
