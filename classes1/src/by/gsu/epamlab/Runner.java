@@ -1,6 +1,6 @@
 package by.gsu.epamlab;
 
-public class Main {
+public class Runner {
 
     public static void main(String[] args) {
         BusinessTrip[] businessTrips = {
