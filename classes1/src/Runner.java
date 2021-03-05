@@ -1,4 +1,4 @@
-package by.gsu.epamlab;
+import by.gsu.epamlab.BusinessTrip;
 
 public class Runner {
 
