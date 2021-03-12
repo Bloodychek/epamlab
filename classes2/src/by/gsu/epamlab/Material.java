@@ -1,20 +1,17 @@
 package by.gsu.epamlab;
 
-public class Material {
-    private final String name;
-    private final double density;
+import java.util.Locale;
 
-    public Material(){
-        this(null, 0);
-    }
+public enum Material{
 
-    public Material(String name, double density) {
-        this.name = name;
+    STEEL(7850.0),
+    COOPER(8500.0);
+
+    private double density;
+
+    Material(double density)
+    {
         this.density = density;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public double getDensity() {
@@ -23,6 +20,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return name + ";" + density;
+        return name().toLowerCase() + ";" + density;
     }
+
 }
