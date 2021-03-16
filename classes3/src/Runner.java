@@ -25,28 +25,25 @@ public class Runner {
 
             printArray(purchases);
 
-            if(purchases.length != 0)
-            {
                 int max = 0;
                 double average = 0;
                 int sum = 0;
                 int cost = 0;
                 WeekDay weekDay = null;
                 for (Purchase purchase : purchases) {
-                    sum += purchase.getCost();
-                    if(purchase.getCost() > max){
-                        max = purchase.getCost();
+                    int costs = purchase.getCost();
+                    sum += costs;
+                    if(costs > max){
+                        max = costs;
                         weekDay = purchase.getWeekDay();
                     }
                     if(purchase.getWeekDay() == WeekDay.MONDAY){
-                        cost += purchase.getCost();
+                        cost += costs;
                     }
                 }
+            if(purchases.length > 0)
+            {
                 average = sum *100.0 / purchases.length / 10000;
-
-                System.out.println("Mean cost = " + average);
-                System.out.println("The total cost on Monday = " + Utils.moneyToString(cost));
-                System.out.println("The day with the maximum cost purchase is " + weekDay);
             }
             else {
                 System.out.println("Mean cost = 0.000");
@@ -55,6 +52,10 @@ public class Runner {
                 System.out.println("Required purchase is not found");
 
             }
+
+            System.out.println("Mean cost = " + average);
+            System.out.println("The total cost on Monday = " + Utils.moneyToString(cost));
+            System.out.println("The day with the maximum cost purchase is " + weekDay);
 
             Arrays.sort(purchases);
             System.out.println("sorted");
