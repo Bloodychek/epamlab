@@ -12,7 +12,7 @@ public class Runner {
 
     public static void main(String[] args) {
         try(Scanner sc = new Scanner(new FileReader("src/in.txt"))) {
-            sc.useLocale(Locale.ENGLISH);		//установка локали,
+            sc.useLocale(Locale.ENGLISH);
             final int PURCHASES_NUMBER = sc.nextInt();
             Purchase[] purchases = new Purchase[PURCHASES_NUMBER];
 
@@ -44,13 +44,6 @@ public class Runner {
             if(purchases.length > 0)
             {
                 average = sum *100.0 / purchases.length / 10000;
-            }
-            else {
-                System.out.println("Mean cost = 0.000");
-                System.out.println("The total cost on Monday = 0.00");
-                System.out.println("The day with the maximum cost purchase is null");
-                System.out.println("Required purchase is not found");
-
             }
 
             System.out.println("Mean cost = " + average);
