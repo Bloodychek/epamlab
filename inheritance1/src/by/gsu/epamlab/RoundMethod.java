@@ -13,6 +13,13 @@ package by.gsu.epamlab;
             double roundFunction(double d) {
                 return Math.round(d);
             }
+        },
+
+        CEIL{
+            @Override
+            double roundFunction(double d) {
+                return Math.ceil(d);
+            }
         };
 
         abstract double roundFunction(double d);

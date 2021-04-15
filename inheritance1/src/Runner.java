@@ -16,7 +16,6 @@ public class Runner {
             Purchase[] purchases = new Purchase[PURCHASE_NUMBER];
             Purchase purchasesMax = new Purchase();
 
-            int id = 0;
             boolean areEqual = true;
             for (int i = 0; i < PURCHASE_NUMBER; i++) {
                 Purchase purchase = PurchasesFactory.getPurchasesFromFactory(sc);
