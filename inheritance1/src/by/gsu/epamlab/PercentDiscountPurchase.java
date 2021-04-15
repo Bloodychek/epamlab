@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PercentDiscountPurchase extends Purchase{
     private double percent;
-    private final static int COUNT = 30;
+    private final static int COUNT = 15;
 
     public PercentDiscountPurchase(String name, int price, int number, double percent) {
         super(name, price, number);
@@ -29,7 +29,7 @@ public class PercentDiscountPurchase extends Purchase{
         Byn byn = super.getCost();
         if (super.getNumber() > COUNT) {
             double coef = 1 - percent / 100;
-            byn.mul(coef);
+            byn.mul(coef, RoundMethod.FLOOR, 1);
         }
         return byn;
     }

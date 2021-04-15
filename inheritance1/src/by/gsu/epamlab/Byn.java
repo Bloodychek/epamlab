@@ -2,7 +2,7 @@ package by.gsu.epamlab;
 
 import java.util.Objects;
 
-public class Byn {
+public class Byn implements Comparable<Byn>{
     private int value;
 
     public Byn(int value){
@@ -65,4 +65,15 @@ public class Byn {
     public int compareTo(Byn byn){
             return value - byn.value;
     }
+
+    public Byn mul(double k, RoundMethod roundMethod, int d){
+        int tenPow = (int) Math.pow(10, d);
+        value = (int) roundMethod.round(value * k / tenPow, d) * tenPow;
+        return this;
+    }
+    public Byn round(RoundMethod roundMethod, int d){
+        value = (int) roundMethod.round(value, d);
+        return this;
+    }
+
 }
