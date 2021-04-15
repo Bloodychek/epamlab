@@ -3,12 +3,12 @@ package by.gsu.epamlab;
 import java.util.Scanner;
 
 public class PercentDiscountPurchase extends Purchase{
-    private double discount;
+    private double percent;
     private final static int COUNT = 30;
 
-    public PercentDiscountPurchase(String name, int price, int number, double discount) {
+    public PercentDiscountPurchase(String name, int price, int number, double percent) {
         super(name, price, number);
-        this.discount = discount;
+        this.percent = percent;
     }
 
     public PercentDiscountPurchase() {
@@ -21,24 +21,24 @@ public class PercentDiscountPurchase extends Purchase{
 
     @Override
     protected String fieldsToString(){
-        return super.fieldsToString() + ";" + discount;
+        return super.fieldsToString() + ";" + percent;
     }
 
     @Override
-    public Byn getCost(){
-        if(super.getNumber() > COUNT){
-            double coef = 1 - discount / 100;
-            return super.getCost().mul(coef);
+    public Byn getCost() {
+        Byn byn = super.getCost();
+        if (super.getNumber() > COUNT) {
+            double coef = 1 - percent / 100;
+            byn.mul(coef);
         }
-        else
-            return super.getCost();
+        return byn;
     }
 
     public double getDiscount() {
-        return discount;
+        return percent;
     }
 
     public void setDiscount(double discount) {
-        this.discount = discount;
+        this.percent = discount;
     }
 }

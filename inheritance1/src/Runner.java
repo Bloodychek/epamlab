@@ -12,12 +12,13 @@ public class Runner {
         try {
             Scanner sc = new Scanner(new FileReader("src/in.txt"));
             sc.useLocale(Locale.ENGLISH);
-            final int PURCHASE = 6;
-            Purchase[] purchases = new Purchase[PURCHASE];
+            final int PURCHASE_NUMBER = 6;
+            Purchase[] purchases = new Purchase[PURCHASE_NUMBER];
             Purchase purchasesMax = new Purchase();
 
             int id = 0;
-            for (int i = 0; i < PURCHASE; ++i) {
+            boolean areEqual = true;
+            for (int i = 0; i < PURCHASE_NUMBER; i++) {
                 Purchase purchase = PurchasesFactory.getPurchasesFromFactory(sc);
                 purchases[i] = purchase;
 
@@ -26,19 +27,17 @@ public class Runner {
                 }
 
                 System.out.println(purchases[i]);
-                if (purchases[i].equals(purchases[0])){
-                    id++;
+
+                if(areEqual){
+                    areEqual = purchases[i].equals(purchases[0]);
                 }
             }
 
+            System.out.println(areEqual);
+
             System.out.println("Max cost = " + purchasesMax);
 
-            if(id == purchases.length){
-                System.out.println(true);
-            }
-            else {
-                System.out.println(false);
-            }
+
 
         } catch (FileNotFoundException e) {
             System.err.println("Input file is not found");
