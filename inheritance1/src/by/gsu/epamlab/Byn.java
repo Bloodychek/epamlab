@@ -42,11 +42,6 @@ public class Byn implements Comparable<Byn>{
         return this;
     }
 
-    public Byn mul(double number){
-        value *= number;
-        return this;
-    }
-
     @Override
     public String toString() {
         return String.format("%d.%02d", value / 100, value % 100);
@@ -67,8 +62,7 @@ public class Byn implements Comparable<Byn>{
     }
 
     public Byn mul(double k, RoundMethod roundMethod, int d){
-        int tenPow = (int) Math.pow(10, d);
-        value = (int) roundMethod.round(value * k / tenPow, d) * tenPow;
+        value = (int) roundMethod.round(value * k, d);
         return this;
     }
     public Byn round(RoundMethod roundMethod, int d){
