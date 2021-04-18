@@ -7,6 +7,11 @@ public class PriceDiscountPurchase extends Purchase{
 
     public PriceDiscountPurchase(String name, int price, int number, Byn discount) {
         super(name, price, number);
+        this.discount = discount;
+    }
+
+    public PriceDiscountPurchase(String name, int price, int number, int discount){
+        super(name, price, number);
         this.discount = new Byn(discount);
     }
 

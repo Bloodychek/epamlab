@@ -29,7 +29,7 @@ public class PercentDiscountPurchase extends Purchase{
         Byn byn = super.getCost();
         if (super.getNumber() > COUNT) {
             double coef = 1 - percent / 100;
-            byn.mul(coef, RoundMethod.ROUND, 1);
+            byn.mul(coef, RoundMethod.ROUND, 0);
         }
         return byn;
     }
