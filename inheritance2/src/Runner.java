@@ -12,8 +12,8 @@ public class Runner {
                 new UnitPurchase(166, product, 3),
                 new PercentPurchase(10, product, 66.6),
                 new PercentPurchase(6666, product, 66.6),
-                new TransportAdd(77, product, 43544),
-                new TransportAdd(2, product, 76)
+                new TransportPurchase(77, product, 43544),
+                new TransportPurchase(2, product, 76)
         };
 
         printArray(abstractPurchases);

@@ -1,8 +1,8 @@
 package by.gsu.epamlab;
 
 public class Product {
-    private String name;
-    private Byn price;
+    final private String name;
+    final private Byn price;
 
     public Product(String name, Byn price){
         this.name = name;
@@ -17,16 +17,8 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Byn getPrice() {
         return price;
-    }
-
-    public void setPrice(Byn price) {
-        this.price = price;
     }
 
     @Override
