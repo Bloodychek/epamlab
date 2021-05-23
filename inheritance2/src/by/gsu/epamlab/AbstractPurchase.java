@@ -32,7 +32,7 @@ public abstract class AbstractPurchase implements Comparable<AbstractPurchase> {
         return result;
     }
 
-    public abstract Byn calculate(Byn result);
+    protected abstract Byn calculate(Byn result);
 
     @Override
     public int compareTo(AbstractPurchase o) {

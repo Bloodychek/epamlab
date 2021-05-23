@@ -7,7 +7,7 @@ public class Runner {
     public static void main(String[] args) {
         final Product product = new Product("Milk", new Byn(100));
 
-        AbstractPurchase[] abstractPurchases = {
+        AbstractPurchase[] purchases = {
                 new UnitPurchase(5, product, 0),
                 new UnitPurchase(166, product, 3),
                 new PercentPurchase(10, product, 66.6),
@@ -16,26 +16,21 @@ public class Runner {
                 new TransportPurchase(2, product, 76)
         };
 
-        printArray(abstractPurchases);
+        printArray(purchases);
 
-        Arrays.sort(abstractPurchases);
+        Arrays.sort(purchases);
 
-        printArray(abstractPurchases);
+        printArray(purchases);
 
-        System.out.println(abstractPurchases[abstractPurchases.length - 1].getCost());
+        System.out.println(purchases[purchases.length - 1].getCost());
 
-        int id = Arrays.binarySearch(abstractPurchases, new UnitPurchase(5, product, 0));
-        if(id == 5){
-            System.out.println("Required purchase is found: " + abstractPurchases[id]);
-        }
-        else{
-            System.out.println("Required purchase is not found");
-        }
+        int pos = Arrays.binarySearch(purchases, new UnitPurchase(5, product, 0));
+        System.out.println("Purchase with cost in 5 BYN is " + (pos < 0 ? "not found" : purchases[pos]));
     }
 
-    private static void printArray(AbstractPurchase[] abstratPurchases){
+    private static void printArray(AbstractPurchase[] purchases){
         for (AbstractPurchase abs:
-             abstratPurchases) {
+                purchases) {
             System.out.println(abs);
         }
     }
