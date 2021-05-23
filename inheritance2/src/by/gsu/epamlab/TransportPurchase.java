@@ -19,7 +19,7 @@ public class TransportPurchase extends AbstractPurchase{
 
     @Override
     public Byn calculate(Byn result) {
-        return result.mul(transportationCosts);
+        return result.add(transportationCosts);
     }
 
     @Override

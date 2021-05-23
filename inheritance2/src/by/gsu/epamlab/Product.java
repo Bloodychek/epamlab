@@ -9,6 +9,11 @@ public class Product {
         this.price = price;
     }
 
+    public Product(String name, int price){
+        this.name = name;
+        this.price = new Byn(price);
+    }
+
     public Product(){
         this(null, null);
     }
