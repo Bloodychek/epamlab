@@ -18,13 +18,17 @@ public class Byn implements Comparable<Byn>{
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(Object o) {
+        if (this == o)
             return true;
-        if (!(obj instanceof Byn))
+        if (o == null)
             return false;
-        Byn byn = (Byn) obj;
-        return Double.compare(byn.kopecks, kopecks) == 0;
+        if (!(o instanceof Byn))
+            return false;
+        Byn byn = (Byn) o;
+        if (kopecks != byn.kopecks)
+            return false;
+        return true;
     }
 
     public int compareTo(Byn byn){
@@ -37,14 +41,6 @@ public class Byn implements Comparable<Byn>{
 
     public Byn(Byn byn){
         this(byn.kopecks);
-    }
-
-    public Byn mul(Byn byn){
-        return new Byn(kopecks * byn.kopecks);
-    }
-
-    public Byn div(Byn byn){
-        return new Byn(kopecks / byn.kopecks);
     }
 
     public Byn add(Byn byn){

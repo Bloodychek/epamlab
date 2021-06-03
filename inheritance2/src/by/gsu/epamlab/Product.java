@@ -9,13 +9,12 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, int price){
-        this.name = name;
-        this.price = new Byn(price);
+    public Product(){
+        this("", new Byn(0));
     }
 
-    public Product(){
-        this(null, null);
+    public Product(String name, int price){
+        this(name, new Byn(price));
     }
 
     public String getName() {

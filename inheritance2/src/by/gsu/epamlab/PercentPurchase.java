@@ -2,6 +2,7 @@ package by.gsu.epamlab;
 
 public class PercentPurchase extends AbstractPurchase{
     private double percentDiscount;
+    private final static int COUNT = 15;
 
     public PercentPurchase(int number, Product product, double percentDiscount) {
         super(number, product);
@@ -14,7 +15,7 @@ public class PercentPurchase extends AbstractPurchase{
 
     @Override
     public Byn calculate(Byn result) {
-        if(getNumber() > percentDiscount){
+        if(getNumber() > COUNT){
             result = result.mul(1 - (int)percentDiscount / 100);
         }
         return result;
