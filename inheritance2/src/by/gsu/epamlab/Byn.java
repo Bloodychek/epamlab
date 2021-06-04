@@ -2,7 +2,6 @@ package by.gsu.epamlab;
 
 public class Byn implements Comparable<Byn>{
     private final int kopecks;
-    private int value;
 
     public Byn(int kopecks){
         this.kopecks = kopecks;
@@ -57,7 +56,6 @@ public class Byn implements Comparable<Byn>{
     }
 
     public Byn round(RoundMethod roundMethod, int d){
-        value = roundMethod.round(value, d);
-        return this;
+        return new Byn(roundMethod.round(kopecks, d));
     }
 }
