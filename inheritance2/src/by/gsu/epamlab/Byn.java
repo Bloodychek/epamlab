@@ -43,7 +43,6 @@ public class Byn implements Comparable<Byn>{
     }
 
     public Byn add(Byn byn){
-
         return new Byn(kopecks + byn.kopecks);
     }
 
@@ -53,6 +52,10 @@ public class Byn implements Comparable<Byn>{
 
     public Byn mul(int number){
         return new Byn(kopecks * number);
+    }
+
+    public Byn mul(double number, RoundMethod roundMethod, int d){
+        return new Byn(roundMethod.round(kopecks * number, d));
     }
 
     public Byn round(RoundMethod roundMethod, int d){

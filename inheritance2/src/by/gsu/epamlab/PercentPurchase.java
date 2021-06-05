@@ -16,7 +16,8 @@ public class PercentPurchase extends AbstractPurchase{
     @Override
     public Byn calculate(Byn result) {
         if(getNumber() > COUNT){
-            result = result.mul(1 - (int)percentDiscount / 100);
+            double coeff = 1 - percentDiscount / 100;
+            result = result.mul(coeff, RoundMethod.FLOOR, 0);
         }
         return result;
     }
