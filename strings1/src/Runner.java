@@ -24,11 +24,17 @@ public class Runner {
                     int id = Integer.parseInt(sup[0]);
                     String[] element = sup[id].split("");
                     if(element[0].equals(MINUS.trim())){
-                        strings.append(MINUS).append(Math.abs(Double.parseDouble(sup[id])));
+                        strings.append(MINUS);
+                        if (strings.length() == STRINGS_LENGTH + MINUS.length()) {
+                            strings.deleteCharAt(STRINGS_LENGTH);
+                            strings.deleteCharAt(STRINGS_LENGTH + 1);
+                        }
+                        strings.append(Math.abs(Double.parseDouble(sup[id])));
                     }
                     else{
-                        if (strings.length() != STRINGS_LENGTH)
+                        if (strings.length() != STRINGS_LENGTH){
                             strings.append(PLUS);
+                        }
                         strings.append(Double.parseDouble(sup[id]));
                     }
                     doubleResult += Double.parseDouble(sup[id]);
