@@ -6,48 +6,48 @@ import java.util.Scanner;
 public class Runner {
 
     public static void main(String[] args) {
-        final String INPUT_CSV = "src/in.csv";
-        final String PLUS = " + ";
-        final String MINUS = " - ";
-        String err = "error-lines = ";
-        int errors = 0;
-        String strResult = "result(";
-        double doubleResult = 0;
-        StringBuilder strings = new StringBuilder(strResult);
-        final int STRINGS_LENGTH = strings.length();
         try {
+            final String INPUT_CSV = "src/in.csv";
             Scanner sc = new Scanner(new FileReader(INPUT_CSV));
-            while (sc.hasNext()){
-                String line = sc.nextLine();
-                String[] sup = line.split(";");
+            final String BEFORE_SIGN = " ";
+            final String AFTER_SIGN = " ";
+            final String PLUS = BEFORE_SIGN + "+" + AFTER_SIGN;
+            final String MINUS = BEFORE_SIGN + "-" + AFTER_SIGN;
+            final String DELIMITER = ";";
+            final String ERROR_LINES = "error-lines = ";
+            final String RESULT_HEAD = "result(";
+            final String RESULT_TAIL = ") = ";
+            StringBuilder strResult = new StringBuilder();
+            final int STRINGS_LENGTH = strResult.length();
+            int errorLines = 0;
+            double numResult = 0;
+
+            while (sc.hasNextLine()){
+                String[] words = sc.nextLine().split(DELIMITER);
                 try{
-                    int id = Integer.parseInt(sup[0]);
-                    String[] element = sup[id].split("");
-                    if(element[0].equals(MINUS.trim())){
-                        strings.append(MINUS);
-                        if (strings.length() == STRINGS_LENGTH + MINUS.length()) {
-                            strings.deleteCharAt(STRINGS_LENGTH);
-                            strings.deleteCharAt(STRINGS_LENGTH + 1);
-                        }
-                        strings.append(Math.abs(Double.parseDouble(sup[id])));
-                    }
-                    else{
-                        if (strings.length() != STRINGS_LENGTH){
-                            strings.append(PLUS);
-                        }
-                        strings.append(Double.parseDouble(sup[id]));
-                    }
-                    doubleResult += Double.parseDouble(sup[id]);
+                    int id = Integer.parseInt(words[0]);
+                    double number = Double.parseDouble(words[id]);
+                    numResult += number;
+                    strResult.append(number > 0 ? PLUS: MINUS).append(Math.abs(number));
                 }
                 catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
-                    errors++;
+                    errorLines++;
                 }
             }
-            System.out.println(strings + ") = " + doubleResult);
-            System.out.println(err + errors);
+            if (strResult.length() > 0){
+                final int SIGN_LENGTH = MINUS.length();
+                final char CHAR_MINUS = '-';
+                final char sign = strResult.charAt(1);
+                strResult.delete(0, SIGN_LENGTH);
+                if(sign == CHAR_MINUS){
+                    strResult.insert(0, CHAR_MINUS);
+                }
+            }
+            System.out.println(RESULT_HEAD + strResult + RESULT_TAIL + numResult);
+            System.out.println(ERROR_LINES + errorLines);
         }
         catch (FileNotFoundException e) {
-            System.err.println("Input file not found");
+            System.err.println("No input file...");
         }
     }
 }
