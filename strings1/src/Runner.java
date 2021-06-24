@@ -6,9 +6,8 @@ import java.util.Scanner;
 public class Runner {
 
     public static void main(String[] args) {
-        try {
-            final String INPUT_CSV = "src/in.csv";
-            Scanner sc = new Scanner(new FileReader(INPUT_CSV));
+        final String INPUT_CSV = "src/in.csv";
+        try (Scanner sc = new Scanner(new FileReader(INPUT_CSV))){
             final String BEFORE_SIGN = " ";
             final String AFTER_SIGN = " ";
             final String PLUS = BEFORE_SIGN + "+" + AFTER_SIGN;
@@ -18,7 +17,6 @@ public class Runner {
             final String RESULT_HEAD = "result(";
             final String RESULT_TAIL = ") = ";
             StringBuilder strResult = new StringBuilder();
-            final int STRINGS_LENGTH = strResult.length();
             int errorLines = 0;
             double numResult = 0;
 
