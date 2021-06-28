@@ -26,11 +26,11 @@ public class Runner {
                 Matcher m1 = p1.matcher(key);
                 if(m1.matches()){
                     try{
-                        var indexKeyStr= m1.group(2);
-                        var indexValueStr = rb.getString(key);
+                        String indexKeyStr= m1.group(2);
+                        String indexValueStr = rb.getString(key);
                         if (p2.matcher(indexValueStr).matches()){
-                            var valueKeyStr = "value" + indexKeyStr + indexValueStr;
-                            var value = Double.parseDouble(rb.getString(valueKeyStr));
+                            String valueKeyStr = "value" + indexKeyStr + indexValueStr;
+                            Double value = Double.parseDouble(rb.getString(valueKeyStr));
                             sum += value;
                         }
                         else{
