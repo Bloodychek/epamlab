@@ -27,12 +27,10 @@ public class Runner {
                 key = keys.nextElement();
                 Matcher keyMatcher = p1.matcher(key);
                 if (keyMatcher.matches()) {
-                    jStr = keyMatcher.group(TAIL_INDEX);
+                    iStr = keyMatcher.group(TAIL_INDEX);
                     jStr = rb.getString(key).trim();
                     Matcher iMatcher = p2.matcher(iStr);
                     Matcher jMatcher = p2.matcher(jStr);
-                    iStr = iMatcher.group(TAIL_INDEX);
-                    iStr = rb.getString(key).trim();
                     if (iMatcher.matches() && jMatcher.matches()) {
                         String valueIJ = VALUE + iStr + jStr;
                         try {
