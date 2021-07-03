@@ -9,49 +9,48 @@ public class Runner {
     public static void main(String[] args) {
         final String ERROR_LINES = "error-lines = ";
         final String SUM = "sum = ";
-        try{
-            int errorLines = 0;
-            double sum = 0;
-            final String beginRegex = "(^index)([1-9]\\d*)";
-            final String indexValueRegex = "^[0]\\.\\d+|^[1-9]\\d*";
-            final String indexRegex = "^index";
-            Pattern p1 = Pattern.compile(beginRegex);
-            Pattern p2 = Pattern.compile(indexValueRegex);
-            Pattern p3 = Pattern.compile(indexRegex);
+        try {
             ResourceBundle rb = ResourceBundle.getBundle("in");
             Enumeration<String> keys = rb.getKeys();
+            final String KEY_REG_EXP = "index(.*)";
+            final String NUM_REG_EXP = "[1-9]\\d*";
+            Pattern p1 = Pattern.compile(KEY_REG_EXP);
+            Pattern p2 = Pattern.compile(NUM_REG_EXP);
+            final int TAIL_INDEX = 1;
+            final String VALUE = "value";
+            String jStr = "";
+            String iStr = "";
+            int errorLines = 0;
+            double sum = 0;
             String key;
-            while (keys.hasMoreElements()){
+            while (keys.hasMoreElements()) {
                 key = keys.nextElement();
-                Matcher m1 = p1.matcher(key);
-                if(m1.matches()){
-                    try{
-                        String indexKeyStr= m1.group(2);
-                        String indexValueStr = rb.getString(key);
-                        if (p2.matcher(indexValueStr).matches()){
-                            String valueKeyStr = "value" + indexKeyStr + indexValueStr;
-                            Double value = Double.parseDouble(rb.getString(valueKeyStr));
+                Matcher keyMatcher = p1.matcher(key);
+                if (keyMatcher.matches()) {
+                    jStr = keyMatcher.group(TAIL_INDEX);
+                    jStr = rb.getString(key).trim();
+                    Matcher iMatcher = p2.matcher(iStr);
+                    Matcher jMatcher = p2.matcher(jStr);
+                    iStr = iMatcher.group(TAIL_INDEX);
+                    iStr = rb.getString(key).trim();
+                    if (iMatcher.matches() && jMatcher.matches()) {
+                        String valueIJ = VALUE + iStr + jStr;
+                        try {
+                            Double value = Double.parseDouble(rb.getString(valueIJ));
                             sum += value;
+                        } catch (NumberFormatException | MissingResourceException e) {
+                            errorLines++;
                         }
-                        else{
-                            errorLines ++;
-                        }
-                    }
-                    catch (NumberFormatException | MissingResourceException e){
-                        errorLines ++;
-                    }
-                }
-                else{
-                    if (p3.matcher(key).find()){
-                        errorLines ++;
+                    } else {
+                        errorLines++;
                     }
                 }
             }
 
             System.out.println(SUM + sum);
             System.out.println(ERROR_LINES + errorLines);
-        }
-        catch (MissingResourceException e) {
+
+        } catch (MissingResourceException e) {
             System.out.println("File not found...");
         }
     }
