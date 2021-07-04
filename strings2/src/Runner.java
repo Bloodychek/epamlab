@@ -18,17 +18,14 @@ public class Runner {
             Pattern p2 = Pattern.compile(NUM_REG_EXP);
             final int TAIL_INDEX = 1;
             final String VALUE = "value";
-            String jStr = "";
-            String iStr = "";
             int errorLines = 0;
             double sum = 0;
-            String key;
             while (keys.hasMoreElements()) {
-                key = keys.nextElement();
+                String key = keys.nextElement();
                 Matcher keyMatcher = p1.matcher(key);
                 if (keyMatcher.matches()) {
-                    iStr = keyMatcher.group(TAIL_INDEX);
-                    jStr = rb.getString(key).trim();
+                    String iStr = keyMatcher.group(TAIL_INDEX);
+                    String jStr = rb.getString(key).trim();
                     Matcher iMatcher = p2.matcher(iStr);
                     Matcher jMatcher = p2.matcher(jStr);
                     if (iMatcher.matches() && jMatcher.matches()) {
