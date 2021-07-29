@@ -17,16 +17,7 @@
 
 **Вопрос.** Что такое агрегатные операции? Приведите примеры агрегатных операций  
 **Ответ.** Агрегированные операции обрабатывают элементы из потока, а не напрямую из коллекции.
-~~~java
-roster
-        .stream()
-        .filter(
-        p -> p.getGender() == Person.Sex.MALE
-        && p.getAge() >= 18
-        && p.getAge() <= 25)
-        .map(p -> p.getEmailAddress())
-        .forEach(email -> System.out.println(email));
-~~~  
+`filter(), forEach(), limit(), map()`  
 **Источник.** https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#approach9  
 
 **Вопрос.** Какие различия между агрегатными операциями и итераторами?  
@@ -34,15 +25,24 @@ roster
 **Источник.** https://docs.oracle.com/javase/tutorial/collections/streams/index.html  
 
 **Вопрос.** Какие имеются ограничения на локальные переменные, которые используются в лямбда-выражениях?  
-**Ответ.** лямбда выражения не имеют теневое копирование.  
-**Источник.** https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#accessing-local-variables.  
+**Ответ.** Лямбда-выражение может обращаться только к локальным переменным и параметрам заключающего блока, которые являются окончательными или фактически конечными.  
+**Источник.** https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html  
 
 **Вопрос.** Что такое целевой тип лямбда-выражения и как компилятор определяет целевой тип?  
 **Ответ.** Тип данных, который ожидает метод, использующий лямбда - целевой тип. Компилятор использует целевой тип, в котором ожидается лямбда.  
 **Источник.** https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#target-typing  
 
 **Вопрос.** В каких ситуациях может использоваться лямбда-выражение?  
-**Ответ.** Может использоваться для выполнения кода в отдельном потоке,для выполнения в результате события.  
+**Ответ.** Лямбда-выражение может использоваться только в ситуациях, когда компилятор Java может определить целевой тип:
+Объявления переменных
+Присваивание
+Возврат значения (return)
+Инициализация массива
+Аргументы метода или конструктора
+В теле лямбда-выражения
+Условные операторы
+Операции преобразования типов  
+**Источник.** https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html  
 
 **Вопрос.** Могут ли лямбда-выражения ссылаться на другие существующие методы? Если да - приведите пример.  
 **Ответ.** Могут.Пример: сортировка строк независимо от регистра
@@ -57,11 +57,12 @@ Arrays.sort(strs, String::compareToIgnoreCase)
 3.Ссылка на конструктор - имя_класса::new;  
 
 **Вопрос.** Что такое операции сокращения в контексте лямбда-выражений?  
-**Ответ.** Операции, которые позволяют вычислить результат, используя все элементы, присутствующие в потоке.  
+**Ответ.** JDK содержит множество терминальных операций (таких , как `average`, `sum`, `min`, `max`, и `count`) , которые возвращают одно значение путем объединения содержимого потока. Эти операции называются операциями сокращения. JDK также содержит операции сокращения, которые возвращают коллекцию вместо одного значения. Многие операции сокращения выполняют конкретную задачу, такую как поиск среднего значения или группирование элементов по категориям.  
+**Источник.** https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html  
 
 **Вопрос.** Чем метод reduce отличается от метода collect в контексте лямбда-выражений?  
-**Ответ.** Collect при модификации набора данных выдаёт коллекцию, в то время как reduce
-выполняет терминальные операции сведения, возвращая некоторое значение - результат операции.  
+**Ответ.** В отличие от `reduce` метода, который всегда создает новое значение при обработке элемента, `collect` метод изменяет или мутирует существующее значение.  
+**Источник.** https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html  
 
 **Вопрос.** Укажите, какие преимущества дает использование класса Optional?  
 **Ответ.** Он позволяет избавиться от исключения NullPointerException и проверки на null.  
@@ -86,7 +87,8 @@ Arrays.sort(strs, String::compareToIgnoreCase)
 ~~~  
 Через поток
 ~~~java
-    filteredPhones.stream().forEach(System.out::println);
+    collect.forEach(System.out::println);
+        collect.stream().forEach((c) -> System.out.println(c));
 ~~~  
 
 **Вопрос.** Выполните вывод каждого элемента Map collect с помощью java 8.  
@@ -157,7 +159,10 @@ List<String> names = Arrays.asList("John", "Jan", "Tirion", "Marry", "Nikolas");
 }  
 **Ответ.**
 ```java
-System.out.println(numbers.stream().filter(e -> e.lenght() > 4).count());
+long count =  names.stream()
+        .filter(i->i.length()>4)
+        .count();
+        System.out.println(count);
 ```  
 
 **Вопрос.** Допишите код, чтобы вывести каждый элемент коллекции, умножив его на 2, используя метод map().
@@ -182,7 +187,10 @@ List<Integer> evenNumbers = ...
 }  
 **Ответ.**
 ```java
-List<Integer> evenNumbers = numbers.stream().filter(e -> e % 2 == 0).peek(System.out::println).collect(Collector.toList());
+List<Integer> evenNumbers = numbers.stream()
+        .filter(i -> i % 2 == 0)
+        .collect(Collectors.toList());
+        System.out.println(evenNumbers);
 ```  
 
 **Вопрос.** Создайте новую коллекцию LinkedList (имплементация Queue) и выведите в консоль НЕ пустые строки из коллекции ArrayList names с использованием методов filter() и collect().
@@ -227,7 +235,7 @@ Optional<Integer> first = ...
 **Ответ.**
 ```java
 Optional<Integer> first =numbers.stream().filter(e -> e > 10).findFirst();
-System.out.println(first.get());
+System.out.println(first);
 ```  
 
 
@@ -237,8 +245,7 @@ System.out.println(first.get());
 public class Main {
 public static void main(String[] args) {
 	 List<String> strings = Arrays.asList("Java is the best", "Java 8", "Java 9", "Jacoco");
-	 Optional<String> java = strings
-	.parallelStream()
+	 Optional<String> java = strings.stream()
     .filter(e -> e.contains("Java"))
     .findAny();
 	System.out.println(java);
@@ -318,7 +325,8 @@ x -> x -> 5;
 for (byte b : "Java".getBytes()) {
 foo(() -> b);
 }  
-**Ответ.** Скомпилируется. Если существует метод foo() который принимает интерфейс лямбда-выражения как параметр.  
+**Ответ.** Да, скомпилируется, т. к. на каждой итерации создается новая переменная byte b.  
+**Источник.** https://docs.oracle.com/javase/specs/jls/se14/html/jls-15.html#jls-LambdaBody  
 
 **Вопрос.** Дана матрица 3х3 используя Java 8 преобразуйте ее в одномерный массив.  
 **Ответ.**
@@ -352,51 +360,10 @@ List<BlogPost> posts = Arrays.asList( ... );
 Все статьи относящиеся к каждому типу статей, список статей должен представлять собой строку формата: “Post titles: [title1, title2, …..] “  
 **Ответ.**
 ~~~java
-public class UserService {
-    static List<BlogPost> posts;
-
-    public static void main(String[] args) {
-        posts = List.of(
-                new BlogPost("name1", "author1", BlogPostType.NEWS, 1),
-                new BlogPost("name2", "author2", BlogPostType.GUIDE, 23),
-                new BlogPost("name3", "author3", BlogPostType.REVIEW, 234),
-                new BlogPost("name4", "author4", BlogPostType.NEWS, 345),
-                new BlogPost("name5", "author5", BlogPostType.GUIDE, 6789),
-                new BlogPost("name6", "author6", BlogPostType.REVIEW, 322),
-                new BlogPost("name7", "author7", BlogPostType.NEWS, 342),
-                new BlogPost("name8", "author8", BlogPostType.GUIDE, 33),
-                new BlogPost("name9", "author9", BlogPostType.REVIEW, 3234),
-                new BlogPost("name0", "author0", BlogPostType.NEWS, 333)
-        );
-
-        //task1
-        posts.stream()
-                .distinct()
-                .forEach(System.out::println);
-
-        //task2
-        method(BlogPostType.NEWS);
-        method(BlogPostType.REVIEW);
-        method(BlogPostType.GUIDE);
-
-        //task3
-        var titles = posts.stream()
-                .map(name -> name.title)
-                .toArray();
-        System.out.println("Post titles: " + Arrays.toString(titles));
-
-
-    }
-
-    public static void method(BlogPostType blogPostType) {
-
-        posts.stream()
-                .filter(item -> item.type.equals(blogPostType))
-                .max(Comparator.comparing(BlogPost::getLikes))
-                .ifPresent(System.out::println);
-
-    }
-}
+Map<BlogPostType, Set<BlogPost>> postsPerType =   posts.stream().collect(groupingBy(BlogPost::getType, toSet()));
+        Map<BlogPostType, Optional<BlogPost>> maxLikesPerPostType = posts.stream() .collect(groupingBy(BlogPost::getType,  maxBy(comparingInt(BlogPost::getLikes))));
+        Map<BlogPostType, String> postsPerType = posts.stream() .collect(groupingBy(BlogPost::getType, mapping(BlogPost::getTitle, joining(", ", "Post titles: [", "]"))));
+        Источник. https://www.baeldung.com/java-groupingby-collector
 ~~~  
 
 **Вопрос:** Приведите два способа получения последнего элемента в потоке, в чем особенности вычисления этого значения в потоках.  
@@ -404,6 +371,7 @@ public class UserService {
 - Использование API-интерфейса Reduce. Этот способ будет возвращать детерминированные результаты только для последовательных потоков. Поток сокращается до уровня, на котором остается только последний элемент. Если поток пуст, он вернет нулевое значение.
 - Использование функции пропуска. Это может быть достигнуто с помощью функции Skip класса Stream. В этом случае мы потребляем Stream дважды, поэтому есть явное влияние на производительность.  
 **Источник:** https://ru.minecraftfullmod.com/1486-how-to-get-the-last-element-of-a-stream-in-java  
+
 
 **Вопрос:** Дан код, можно ли его как-то отрефакторить? Если да, то сделайте это.
 Подсказка:
@@ -520,10 +488,16 @@ public class Main {
 
         populate(employees, departments);
 
-        List<Employee> salesEmpoyees = salesEmpoyees.stream().filter(s -> s.getDepartments.equals(sales));
+        List<Employee> filteredList = employees.stream()
+                .filter(empl -> departments.stream()
+                        .anyMatch(dept ->
+                                dept.getDepartment().equals("sales") &&
+                                        empl.getEmployeeId().equals(dept.getEmployeeId())))
+                .collect(Collectors.toList());
     }
 }
 ```  
+**Источник.** https://www.baeldung.com/java-streams-find-list-items  
 
 **Вопрос:** Дан код
 ```java
@@ -536,11 +510,26 @@ class Tuple<T1, T2> {
     List<Integer> ages = new ArrayList<>(Arrays.asList(24, 25, 27));
     List<Tuple<String, Integer>> namesAndAges = …
 ```
+
 Выполните операцию ‘zip’ для коллекций ages и names.
 Zip: операция «zip» немного отличается от стандартной «concat» или «merge». В то время как операции «concat» или «merge» просто добавят новую коллекцию в конец существующей коллекции, операция «zip» возьмет элемент из каждой коллекции и объединит их.
 Например, в результате выполнения этого задания должна получиться коллекция:
 [John;24, Jane;25, Jack;27]  
 **Ответ:**
+```java
+class Tuple<T1, T2> {
+    private T1 item1;
+    private T2 item2;
+// getters and setters
+}
+    List<String> names = new ArrayList<>(Arrays.asList("John", "Jane", "Jack", "Dennis"));
+    List<Integer> ages = new ArrayList<>(Arrays.asList(24, 25, 27));
+    List<Tuple<String, Integer>> namesAndAges =
+            IntStream.range(0, Math.min(names.size(), ages.size()))
+                    .mapToObj(i -> new Tuple<>(names.get(i), ages.get(i)))
+                    .collect(Collectors.toList());
+```  
+**Источник.** https://www.baeldung.com/java-collections-zip  
 
 **Вопрос:** Дан код, замените  {code} и {type} так, чтобы получить нужные результаты
 ```java
@@ -581,24 +570,56 @@ Collection<String> strings = Arrays.asList("a1", "b2", "c3", "a1");
 // напечатает parts = {false=[1, 3], true=[2, 4]}
         System.out.println("parts = " + parts);
 ```  
-**Ответ:** 
+**Ответ:**
+```java
+Collection<String> strings = Arrays.asList("a1", "b2", "c3", "a1");
+// Получение списка из коллекции строк без дубликатов
+        List<String> distinct = strings.stream().distinct().collect(Collectors.toList());
+        System.out.println("distinct = " + distinct);
+// Объединить все элементы в одну строку через разделитель : и обернуть тегами <b> ... </b>
+        String join = strings.stream().collect(Collectors.joining(" : ", "<b> ", " </b>"));
+        System.out.println("join = " + join);
+// Преобразовать в map, сгруппировав по первому символу строки
+        Map<String, List<String>> groups = strings.stream()
+        .collect(Collectors.groupingBy((p) -> p.substring(0, 1)));
+        System.out.println("groups = " + groups);
+// Преобразовать в map, сгруппировав по первому символу строки и в качестве значения взять второй символ объединим через :
+        Map<String, String> groupJoin = strings.stream()
+        .collect(Collectors.groupingBy(
+        (p) -> p.substring(0, 1),
+        Collectors.mapping((p) -> p.substring(1, 2), Collectors.joining(":"))));
+        System.out.println("groupJoin = " + groupJoin);
+
+        Collection<Integer> numbers = Arrays.asList(1, 2, 3, 4);
+// Получить сумму нечетных чисел
+        long sumOdd = numbers.stream()
+        .collect(Collectors.summingInt(((p) -> p % 2 == 1 ? p : 0)));
+        System.out.println("sumOdd = " + sumOdd);
+// Вычесть к каждого элемента 1 и получить среднее
+        double average = numbers.stream().collect(Collectors.averagingInt((p) -> p - 1));
+        System.out.println("average = " + average); // напечатает average = 1.5
+// Прибавить к числам 3 и получить статистику
+        IntSummaryStatistics statistics = numbers.stream()
+        .collect(Collectors.summarizingInt((p) -> p + 3));
+        System.out.println("statistics = " + statistics);
+// Разделить числа на четные и нечетные
+        Map<Boolean, List<Integer>> parts = numbers.stream()
+        .collect(Collectors.partitioningBy((p) -> p % 2 == 0));
+        System.out.println("parts = " + parts);
+```  
+**Источник.** https://habr.com/ru/company/luxoft/blog/270383/  
 
 **Вопрос:** Дан поток, определите количество вхождений каждого из символов, составляющих поток.
 Stream<String> words = Stream.of("Java", "Magazine", "is", "the", "best");  
 **Ответ:** 
-- J -> 1
-- a -> 4
-- v -> 1
-- M -> 1
-- g -> 1
-- z -> 1
-- i -> 2
-- n -> 1
-- e -> 3
-- s -> 2
-- t -> 2
-- h -> 1
-- b -> 1  
+```java
+Stream<String> words = Stream.of("Java", "Magazine", "is", "the", "best");
+        Map<String, Long> letterToCount =
+        words.map(w -> w.split(""))
+        .flatMap(Arrays::stream)
+        .collect(groupingBy(identity(), counting()));
+```  
+**Источник.** https://www.oracle.com/technical-resources/articles/java/architect-streams-pt2.html  
 
 **Вопрос:** Дан код, как он будет выглядеть если modem обернуть в Optional?
 ```java
@@ -610,7 +631,15 @@ boolean isInRange = false;
         }
         return isInRange;
 ```  
-**Ответ:**  
+**Ответ:** 
+```java
+return Optional.ofNullable(modem2)
+       .map(Modem::getPrice)
+       .filter(p -> p >= 10)
+       .filter(p -> p <= 15)
+       .isPresent();
+```  
+**Источник.** https://www.baeldung.com/java-optional  
 
 **Вопрос:** Дан код, замените {code}, чтобы получить первый объект, которые не null, если такого нет вернуть “default’
 ```java
@@ -627,4 +656,12 @@ private Optional<String> getBye() {
         }
         String firstNonNull = Stream.of(getEmpty(), getHello(), getBye()).{code};
 ```  
-**Ответ:**  
+**Ответ:** 
+```java
+String firstNonNull = Stream.of(getEmpty(), getHello(), getBye())
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .findFirst()
+        .orElseGet(() -> "default");
+```  
+**Источник.** https://www.baeldung.com/java-optional  
