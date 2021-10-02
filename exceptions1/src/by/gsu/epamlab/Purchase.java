@@ -1,20 +1,27 @@
 package by.gsu.epamlab;
 
-public class Purchase implements Comparable<Purchase> {
-    private String name;
-    private Byn price;
-    private int number;
-    private double cost;
+import java.util.Scanner;
 
-    public Purchase(String name, int price, int number, double cost) {
-        this.name = name;
-        this.price = new Byn(price);
-        this.number = number;
-        this.cost = cost;
-    }
+public class Purchase {
+    private String name;
+    private int number;
+    private Byn price;
+    private Byn discount;
 
     public Purchase() {
-        this("", 0, 0, 0);
+        this(null, 0, new Byn(0));
+    }
+
+    public Purchase(String name, int number, Byn price) {
+        this.name = name;
+        this.number = number;
+        this.price = price;
+    }
+
+    public Purchase(Scanner sc) {
+        this.name = sc.next();
+        this.price = new Byn(sc.nextInt());
+        this.number = sc.nextInt();
     }
 
     public String getName() {
@@ -41,41 +48,35 @@ public class Purchase implements Comparable<Purchase> {
         this.number = number;
     }
 
-    public double getCost() {
-        return cost;
+    public Byn getDiscount() {
+        return discount;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
+    protected String fieldsToString() {
+        return name + ";" + price + ";" + number;
     }
 
-    protected String fieldsToString(){
-        return name + ";" + price + ";" + number + ";" + cost;
-    }
-
-    @Override
-    public String toString(){
-        return fieldsToString() + ";" + totalCost();
-    }
-
-    public Byn totalCost(){
+    public Byn totalCost() {
         Byn byn = new Byn(price);
         return byn.mul(number);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (obj == this)
             return true;
+        if (obj == null)
+            return false;
         if (!(obj instanceof Purchase))
             return false;
-        Purchase purchase = (Purchase) obj;
-        return getName().equals(purchase.getName())
-                && getPrice().equals(purchase.getPrice());
+        Purchase objPurchase = (Purchase)obj;
+        return name.equals(objPurchase.name)
+                && price.equals(objPurchase.price);
     }
 
-    public int compareTo(Purchase purchase){
-        return number - purchase.number;
+    @Override
+    public String toString() {
+        return fieldsToString() + ";" + totalCost();
     }
 
 }

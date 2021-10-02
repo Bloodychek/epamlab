@@ -2,74 +2,51 @@ package by.gsu.epamlab;
 
 import java.util.Scanner;
 
+import by.gsu.epamlab.Byn;
+import by.gsu.epamlab.PriceDiscountPurchase;
+import by.gsu.epamlab.Purchase;
+
 public class PurchasesFactory {
-    private static String[] arrStr;
-    private static String newName;
-    private static int newPrice;
-    private static int newNumber;
-    private static int newDiscount;
-    public static Purchase purchase(String str) throws PurchaseException, CheckStringExceptions, NullExceptions {
-        arrStr = str.split(";");
-        if(arrStr.length < 3 && arrStr.length > 4) throw new PurchaseException("Lenght of string more 4 or less 3");
-        try{
+    public static Purchase getPurchaseFromFactory(String line) throws CsvLineException {
+        String[] str = line.split(Constants.DELIMITER);
 
-            try{
-                String newName = arrStr[0];
-            } catch (NumberFormatException e){
-                throw new CheckStringExceptions("Name is not valid");
+        if (str.length > Constants.PRICE_DISCOUNT_PURCHASE_COUNT || str.length < Constants.PURCHASE_COUNT) {
+            throw new CsvLineException(Constants.WRONG_NUMBER_ELEMENTS);
+        }
+
+        try {
+            String name = str[0];
+            Byn price = new Byn(Integer.parseInt(str[1]));
+            int number = Integer.parseInt(str[2]);
+
+            if (name.length() == 0) {
+                throw new CsvLineException(Constants.EMPTY_NAME);
             }
 
-            if(!newName.equals("")){
+            if (number <= 0) {
+                throw new NonPositiveNumberException(number + Constants.IN_NUMBER);
+            }
+
+            if (Integer.parseInt(str[1]) <= 0) {
+                throw new NonPositivePriceException(price + Constants.IN_PRICE);
+            }
+
+            if (str.length == 3) {
+                return new Purchase(name, number, price);
+            } else {
+                Byn discount;
                 try {
-                    throw new NullExceptions("Price consist null number or number less null");
+                    discount = new Byn(Integer.parseInt(str[3]));
+                    if(Integer.parseInt(str[3]) <= 0){
+                        throw new NonPositiveDiscountException(discount + Constants.IN_DISCOUNT);
+                    }
                 } catch (NumberFormatException e) {
-                    e.getMessage();
+                    throw new CsvLineException(Constants.WRONG_NUMBER_ARGUMENTS);
                 }
+                return new PriceDiscountPurchase(name, price, number, discount);
             }
-
-            try{
-                int newPrice = Integer.parseInt(arrStr[1]);
-            } catch (NumberFormatException e){
-                throw new CheckStringExceptions("Price is not valid");
-            }
-
-            if(newPrice <= 0){
-                try {
-                    throw new NullExceptions("Price consist null number or number less null");
-                } catch (NumberFormatException e) {
-                    e.getMessage();
-                }
-            }
-
-            try{
-                int newNumber = Integer.parseInt(arrStr[2]);
-            } catch (NumberFormatException e){
-                throw new CheckStringExceptions("Number is not valid");
-            }
-
-            if(newNumber <= 0){
-                try {
-                    throw new NullExceptions("Number consist null number or number less null");
-                } catch (NumberFormatException e) {
-                    e.getMessage();
-                }
-            }
-
-            if(arrStr.length == 3){
-                return new PriceDiscountPurchase();
-            }
-
-            else if(arrStr.length == 4){
-                try {
-                    int newDiscount = Integer.parseInt(arrStr[3]);
-                } catch (NumberFormatException e){
-                    throw new CheckStringExceptions("discount is not valid");
-                }
-                return new Purchase();
-            }
-            else throw new PurchaseException("One or more parameters of string do not contain the correct information");
-        } catch (NumberFormatException e ) {
-            return null;
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            throw new CsvLineException(Constants.INCORRECT_ARGUMENT);
         }
     }
 }
