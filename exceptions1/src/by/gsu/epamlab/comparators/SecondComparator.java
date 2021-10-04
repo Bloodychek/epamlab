@@ -1,4 +1,7 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.comparators;
+
+import by.gsu.epamlab.models.PriceDiscountPurchase;
+import by.gsu.epamlab.models.Purchase;
 
 import java.util.Comparator;
 
@@ -8,6 +11,7 @@ public class SecondComparator implements Comparator<Purchase> {
         if (o1.getName().equals(o2.getName())) {
             boolean purchase1 = o1.getClass() == PriceDiscountPurchase.class;
             boolean purchase2 = o2.getClass() == PriceDiscountPurchase.class;
+
             if ( purchase1 && purchase2 || !purchase1 && !purchase2) {
                 return o1.totalCost().compareTo(o2.totalCost());
             } else if (purchase1) {

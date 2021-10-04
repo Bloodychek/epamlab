@@ -1,4 +1,10 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.models;
+
+import by.gsu.epamlab.enums.NumField;
+import by.gsu.epamlab.enums.RoundMethod;
+import by.gsu.epamlab.exceptions.NonPositiveArgumentException;
+
+import java.security.PublicKey;
 
 public class Byn implements Comparable<Byn> {
     private int value;
@@ -9,6 +15,10 @@ public class Byn implements Comparable<Byn> {
 
     public Byn(Byn byn) {
         this(byn.value);
+    }
+
+    public Byn() {
+        this(0);
     }
 
     public Byn mul(Byn byn) {

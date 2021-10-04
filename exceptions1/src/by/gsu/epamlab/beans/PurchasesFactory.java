@@ -1,16 +1,18 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.beans;
 
-import java.util.Scanner;
-
-import by.gsu.epamlab.Byn;
-import by.gsu.epamlab.PriceDiscountPurchase;
-import by.gsu.epamlab.Purchase;
+import by.gsu.epamlab.exceptions.NonPositiveArgumentException;
+import by.gsu.epamlab.models.Byn;
+import by.gsu.epamlab.models.PriceDiscountPurchase;
+import by.gsu.epamlab.models.Purchase;
+import by.gsu.epamlab.exceptions.CsvLineException;
 
 public class PurchasesFactory {
     public static Purchase getPurchaseFromFactory(String line) throws CsvLineException {
         String[] str = line.split(Constants.DELIMITER);
 
-        if (str.length > Constants.PRICE_DISCOUNT_PURCHASE_COUNT || str.length < Constants.PURCHASE_COUNT) {
+        int length = str.length;
+
+        if (length > Constants.PRICE_DISCOUNT_PURCHASE_COUNT || length < Constants.PURCHASE_COUNT) {
             throw new CsvLineException(Constants.WRONG_NUMBER_ELEMENTS);
         }
 
@@ -24,21 +26,21 @@ public class PurchasesFactory {
             }
 
             if (number <= 0) {
-                throw new NonPositiveNumberException(number + Constants.IN_NUMBER);
+                throw new CsvLineException(number + Constants.IN_NUMBER);
             }
 
             if (Integer.parseInt(str[1]) <= 0) {
-                throw new NonPositivePriceException(price + Constants.IN_PRICE);
+                throw new CsvLineException(price + Constants.IN_PRICE);
             }
 
             if (str.length == 3) {
-                return new Purchase(name, number, price);
+                return new Purchase(name, price, number);
             } else {
                 Byn discount;
                 try {
                     discount = new Byn(Integer.parseInt(str[3]));
                     if(Integer.parseInt(str[3]) <= 0){
-                        throw new NonPositiveDiscountException(discount + Constants.IN_DISCOUNT);
+                        throw new CsvLineException(discount + Constants.IN_DISCOUNT);
                     }
                 } catch (NumberFormatException e) {
                     throw new CsvLineException(Constants.WRONG_NUMBER_ARGUMENTS);

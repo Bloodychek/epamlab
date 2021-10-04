@@ -1,4 +1,7 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.comparators;
+
+import by.gsu.epamlab.models.PriceDiscountPurchase;
+import by.gsu.epamlab.models.Purchase;
 
 import java.util.Comparator;
 

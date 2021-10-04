@@ -1,4 +1,4 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.enums;
 
 public enum RoundMethod {
     FLOOR{
@@ -23,7 +23,7 @@ public enum RoundMethod {
     };
 
     abstract double roundFunction(double d);
-    int round(double roundedValue, int d) {
+    public int round(double roundedValue, int d) {
         int[] tenPowD = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000 , 100000000};
         return (int)roundFunction(roundedValue / tenPowD[d]) * tenPowD[d];
     }

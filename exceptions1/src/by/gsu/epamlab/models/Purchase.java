@@ -1,4 +1,8 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.models;
+
+import by.gsu.epamlab.beans.Constants;
+import by.gsu.epamlab.enums.NumField;
+import by.gsu.epamlab.exceptions.NonPositiveArgumentException;
 
 import java.util.Scanner;
 
@@ -8,27 +12,31 @@ public class Purchase {
     private Byn price;
     private Byn discount;
 
-    public Purchase() {
-        this(null, 0, new Byn(0));
+    public Purchase(String name, Byn price, int number) {
+        setName(name);
+        setPrice(price);
+        setNumber(number);
     }
 
-    public Purchase(String name, int number, Byn price) {
-        this.name = name;
-        this.number = number;
-        this.price = price;
+    public Purchase(String name, int price, int number) {
+        this(name, new Byn(price), number);
+    }
+
+    public Purchase() {
+        this("", new Byn(0), 0);
     }
 
     public Purchase(Scanner sc) {
         this.name = sc.next();
-        this.price = new Byn(sc.nextInt());
         this.number = sc.nextInt();
+        this.price = new Byn(sc.nextInt());
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -36,7 +44,7 @@ public class Purchase {
         return price;
     }
 
-    public void setPrice(Byn price) {
+    public final void setPrice(Byn price) {
         this.price = price;
     }
 
@@ -44,7 +52,7 @@ public class Purchase {
         return number;
     }
 
-    public void setNumber(int number) {
+    public final void setNumber(int number) {
         this.number = number;
     }
 
@@ -52,7 +60,7 @@ public class Purchase {
         return discount;
     }
 
-    protected String fieldsToString() {
+    public String fieldsToString() {
         return name + ";" + price + ";" + number;
     }
 
@@ -69,14 +77,14 @@ public class Purchase {
             return false;
         if (!(obj instanceof Purchase))
             return false;
-        Purchase objPurchase = (Purchase)obj;
+        Purchase objPurchase = (Purchase) obj;
         return name.equals(objPurchase.name)
                 && price.equals(objPurchase.price);
     }
 
     @Override
     public String toString() {
-        return fieldsToString() + ";" + totalCost();
+        return fieldsToString() + Constants.DELIMITER + totalCost();
     }
 
 }
