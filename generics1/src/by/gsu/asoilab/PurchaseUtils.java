@@ -27,12 +27,12 @@ public class PurchaseUtils {
 
     public void printCostDiff(Purchase p) {
         Byn costDiff = purchase.getCost().sub(p.getCost());
-        int xxx = purchase.getCost().compareTo(p.getCost());
-        if (xxx > 0) {
+        int diffCompare = purchase.getCost().compareTo(p.getCost());
+        if (diffCompare > 0) {
             System.out.println(Constants.POSITIVE + costDiff);
-        } else if (xxx < 0) {
+        } else if (diffCompare < 0) {
             System.out.println(Constants.NEGATIVE + costDiff);
-        } else if (xxx == 0) {
+        } else if (diffCompare == 0) {
             System.out.println(Constants.EMPTY + costDiff);
         }
     }
