@@ -1,13 +1,13 @@
 package by.gsu.asoilab.Models;
 
 import by.gsu.asoilab.Constants.Constants;
-import by.gsu.asoilab.Price;
+import by.gsu.asoilab.Priceable;
 
-public class Products implements Price {
+public class Product implements Priceable {
     private String name;
     private Byn price;
 
-    public Products(String name, Byn price) {
+    public Product(String name, Byn price) {
         this.name = name;
         this.price = price;
     }
@@ -29,7 +29,7 @@ public class Products implements Price {
     }
 
     protected String fieldsToString(){
-        return  name + Constants.DELIMITER + price;
+        return name + Constants.DELIMITER + price;
     }
 
     @Override

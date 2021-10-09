@@ -1,27 +1,27 @@
 package by.gsu.asoilab.Models;
 
 import by.gsu.asoilab.Constants.Constants;
-import by.gsu.asoilab.Price;
+import by.gsu.asoilab.Priceable;
 import by.gsu.asoilab.RoundMethod;
 
 public class Purchase{
-    private Price item;
-    private double quantity;
+    private Priceable item;
+    private Number quantity;
 
-    public Purchase(Price item, double quantity){
+    public Purchase(Priceable item, Number quantity){
         this.item = item;
         this.quantity = quantity;
     }
 
-    public Price getItem() {
+    public Priceable getItem() {
         return item;
     }
 
-    public void setItem(Price item) {
+    public void setItem(Priceable item) {
         this.item = item;
     }
 
-    public double getQuantity() {
+    public Number getQuantity() {
         return quantity;
     }
 
@@ -30,11 +30,11 @@ public class Purchase{
     }
 
     public Byn getCost(){
-        return item.getPrice().mul(quantity, RoundMethod.ROUND, 2);
+        return item.getPrice().mul(quantity.doubleValue(), RoundMethod.ROUND, 0);
     }
 
     @Override
     public String toString() {
-        return item + Constants.DELIMITER + quantity;
+        return item + Constants.DELIMITER + quantity + Constants.DELIMITER + getCost();
     }
 }

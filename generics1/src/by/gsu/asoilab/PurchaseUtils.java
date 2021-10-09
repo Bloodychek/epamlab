@@ -26,22 +26,32 @@ public class PurchaseUtils {
     }
 
     public void printCostDiff(Purchase p) {
-        Byn costDiff = purchase.getCost().sub(p.getCost());
+        Byn greaterCost = new Byn();
+        Byn lesserCost = new Byn();
         int diffCompare = purchase.getCost().compareTo(p.getCost());
+        String costDiff = Constants.EMPTY;
         if (diffCompare > 0) {
-            System.out.println(Constants.POSITIVE + costDiff);
+            greaterCost = purchase.getCost();
+            lesserCost = p.getCost();
+            costDiff += Constants.POSITIVE;
         } else if (diffCompare < 0) {
-            System.out.println(Constants.NEGATIVE + costDiff);
-        } else if (diffCompare == 0) {
-            System.out.println(Constants.EMPTY + costDiff);
+            greaterCost = p.getCost();
+            lesserCost = purchase.getCost();
+            costDiff += Constants.NEGATIVE;
         }
+        costDiff += greaterCost.sub(lesserCost) + Constants.BYN;
+        System.out.println(costDiff);
     }
 
-    public void printlsSameCost(List<Purchase> purchases) {
+    public void printlsSameCost(Purchase... purchases) {
+        boolean flag = false;
         for (Purchase p : purchases) {
             if (purchase.getCost().equals(p.getCost())) {
                 System.out.println(Constants.PURCHASE_SAME_COST + getPurchase());
+                flag = true;
+                break;
             }
         }
+        System.out.println(flag);
     }
 }

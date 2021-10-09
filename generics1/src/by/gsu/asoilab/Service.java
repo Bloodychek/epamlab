@@ -3,7 +3,7 @@ package by.gsu.asoilab;
 import by.gsu.asoilab.Constants.Constants;
 import by.gsu.asoilab.Models.Byn;
 
-public class Service implements Price{
+public class Service implements Priceable {
     private String name;
     private Byn totalCost;
     private int number;
@@ -39,11 +39,11 @@ public class Service implements Price{
     }
 
     public Byn getPrice(){
-        return totalCost.div(number, RoundMethod.CEIL, 0);
+        return totalCost.mul(1.0 / number, RoundMethod.CEIL, 0);
     }
 
     @Override
     public String toString() {
-        return name + Constants.DELIMITER + totalCost + Constants.DELIMITER + number;
+        return name + Constants.DELIMITER + totalCost + Constants.DELIMITER + number + Constants.DELIMITER + getPrice();
     }
 }

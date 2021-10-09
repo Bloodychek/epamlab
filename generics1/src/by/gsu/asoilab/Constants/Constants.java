@@ -9,4 +9,7 @@ public class Constants {
     public final static String NEGATIVE = "negative: ";
     public final static String EMPTY = "";
     public final static String PURCHASE_SAME_COST = "Purchase same cost: ";
+    public final static String GYM = "Gym";
+    public final static String SUGAR = "Sugar";
+    public final static String MILK = "Milk";
 }

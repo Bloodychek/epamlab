@@ -2,9 +2,9 @@ package by.gsu.asoilab;
 
 import by.gsu.asoilab.Constants.Constants;
 import by.gsu.asoilab.Models.Byn;
-import by.gsu.asoilab.Models.Products;
+import by.gsu.asoilab.Models.Product;
 
-public class DiscountProduct extends Products {
+public class DiscountProduct extends Product {
     private Byn discount;
 
     public DiscountProduct(String name, Byn price, Byn discount) {
@@ -18,6 +18,10 @@ public class DiscountProduct extends Products {
 
     public Byn getDiscount() {
         return discount;
+    }
+
+    public Byn getPrice(){
+        return super.getPrice().sub(discount);
     }
 
     @Override
