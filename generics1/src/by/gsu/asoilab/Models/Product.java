@@ -34,6 +34,6 @@ public class Product implements Priceable {
 
     @Override
     public String toString() {
-        return fieldsToString();
+        return fieldsToString() + Constants.DELIMITER + getPrice();
     }
 }

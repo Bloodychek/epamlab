@@ -6,17 +6,16 @@ import by.gsu.asoilab.Models.Purchase;
 
 import java.util.List;
 
-public class PurchaseUtils {
-    private Purchase purchase;
+public class PurchaseUtils<T extends Priceable, N extends Number> {
+    private Purchase<T, N> purchase;
 
-    public PurchaseUtils(Purchase purchase) {
+    public PurchaseUtils(Purchase<T, N> purchase){
         this.purchase = purchase;
     }
 
-    public Purchase getPurchase() {
+    public Purchase<T, N> getPurchase() {
         return purchase;
     }
-
     public void printPurchase() {
         System.out.println(purchase);
     }
@@ -25,7 +24,7 @@ public class PurchaseUtils {
         System.out.println(Constants.COST + purchase.getCost() + Constants.BYN);
     }
 
-    public void printCostDiff(Purchase p) {
+    public void printCostDiff(Purchase<? extends Priceable, ? extends Number> p) {
         Byn greaterCost = new Byn();
         Byn lesserCost = new Byn();
         int diffCompare = purchase.getCost().compareTo(p.getCost());
@@ -43,9 +42,9 @@ public class PurchaseUtils {
         System.out.println(costDiff);
     }
 
-    public void printlsSameCost(Purchase... purchases) {
+    public void printlsSameCost(Purchase<?, ?>... purchases) {
         boolean flag = false;
-        for (Purchase p : purchases) {
+        for (Purchase<?, ?> p : purchases) {
             if (purchase.getCost().equals(p.getCost())) {
                 System.out.println(Constants.PURCHASE_SAME_COST + getPurchase());
                 flag = true;
