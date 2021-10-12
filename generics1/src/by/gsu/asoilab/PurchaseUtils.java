@@ -44,7 +44,7 @@ public class PurchaseUtils<T extends Priceable, N extends Number> {
 
     public void printlsSameCost(Purchase<?, ?>... purchases) {
         boolean flag = false;
-        for (Purchase<?, ?> p : purchases) {
+        for (Purchase<? extends Priceable, ? extends Number> p : purchases) {
             if (purchase.getCost().equals(p.getCost())) {
                 System.out.println(Constants.PURCHASE_SAME_COST + getPurchase());
                 flag = true;

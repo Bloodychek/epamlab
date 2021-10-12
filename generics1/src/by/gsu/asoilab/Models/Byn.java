@@ -51,7 +51,7 @@ public class Byn implements Comparable<Byn> {
     }
 
     public Byn div(double value, RoundMethod roundMethod, int d) {
-        return new Byn(roundMethod.round(kopecks / value, d));
+        return new Byn(mul(1.0 / value, roundMethod, d));
     }
 
     public Byn round(RoundMethod roundMethod, int d) {
