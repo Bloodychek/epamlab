@@ -8,9 +8,4 @@ public enum WeekDay {
     THURSDAY,
     FRIDAY,
     SATURDAY;
-
-    @Override
-    public String toString() {
-        return this.name();
-    }
 }

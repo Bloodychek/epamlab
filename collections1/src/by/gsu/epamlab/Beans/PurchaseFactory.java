@@ -13,8 +13,11 @@ public class PurchaseFactory {
         Purchase purchase;
         if (count == 3) {
             purchase = new Purchase(elements[0], Integer.parseInt(elements[1]), Integer.parseInt(elements[2]));
-        } else {
+        } else if (count == 4){
             purchase = new PricePurchase(elements[0], Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), Integer.parseInt(elements[3]));
+        }
+        else {
+            throw new RuntimeException();
         }
         return purchase;
     }

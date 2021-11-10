@@ -18,4 +18,5 @@ public class Constants {
     public final static String TOTAL_COST = "Total cost: ";
     public final static String ENUM_MAP = "Enumerated map: ";
     public final static String MONDAY = "Enumerated map: ";
+    public final static String PURCHASE_IN_MONDAY = "purchase in monday";
 }

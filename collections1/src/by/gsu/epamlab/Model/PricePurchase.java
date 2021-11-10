@@ -19,22 +19,6 @@ public class PricePurchase extends Purchase {
         this.discount = new Byn(discount);
     }
 
-    public PricePurchase() {
-        this("", 0, 0, null);
-    }
-
-    public PricePurchase(Scanner sc) {
-        this(sc.next(), sc.nextInt(), sc.nextInt(), new Byn(sc.nextInt()));
-    }
-
-    public Byn getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Byn discount) {
-        this.discount = discount;
-    }
-
     @Override
     protected String fieldsToString() {
         return super.fieldsToString() + Constants.DELIMITER + discount;

@@ -80,6 +80,9 @@ public class Byn implements Comparable<Byn> {
 
     @Override
     public int hashCode() {
-        return kopecks;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + kopecks;
+        return result;
     }
 }

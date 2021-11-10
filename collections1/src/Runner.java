@@ -1,4 +1,5 @@
 import by.gsu.epamlab.Beans.Constants;
+import by.gsu.epamlab.Beans.EntryChecker;
 import by.gsu.epamlab.Beans.PurchaseFactory;
 import by.gsu.epamlab.Beans.WeekDay;
 import by.gsu.epamlab.Model.Byn;
@@ -22,11 +23,11 @@ public class Runner {
                 Purchase purchase = PurchaseFactory.getPurchaseFromFactory(sc);
                 WeekDay weekDay = WeekDay.valueOf(sc.nextLine());
                 firstPurchaseMap.putIfAbsent(purchase, weekDay);
-                lastPurchaseMap.put(purchase, weekDay);
+                lastPurchaseMap.putIfAbsent(purchase, weekDay);
                 dayPurchaseMap.putIfAbsent(weekDay, new ArrayList<>());
                 dayPurchaseMap.get(weekDay).add(purchase);
 
-                if(purchase instanceof PricePurchase){
+                if (purchase instanceof PricePurchase) {
                     pricePurchases.add((PricePurchase) purchase);
                 }
             }
@@ -34,74 +35,86 @@ public class Runner {
             Purchase firstBread = new Purchase(Constants.BREAD, 155, 0);
             Purchase secondBread = new Purchase(Constants.BREAD, 170, 0);
 
-            System.out.println(Constants.FIRST_PURCHASE_MAP);
-            printMap(firstPurchaseMap);
+            printMap(firstPurchaseMap, Constants.FIRST_PURCHASE_MAP);
 
-            System.out.println(Constants.LAST_PURCHASE_MAP);
-            printMap(lastPurchaseMap);
+            printMap(lastPurchaseMap, Constants.LAST_PURCHASE_MAP);
 
-            System.out.println(Constants.FIRST_FIND);
-            System.out.println(findMap(firstPurchaseMap, firstBread));
+            findAndShow(firstPurchaseMap, firstBread, Constants.FIRST_FIND);
 
-            System.out.println(Constants.LAST_FIND);
-            System.out.println(findMap(lastPurchaseMap, firstBread));
+            findAndShow(lastPurchaseMap, firstBread, Constants.LAST_FIND);
 
-            System.out.println(Constants.LAST_FIND);
-            System.out.println(findMap(lastPurchaseMap, secondBread));
+            findAndShow(lastPurchaseMap, secondBread, Constants.LAST_FIND);
 
-            System.out.println(Constants.FIRST_FIND);
-            System.out.println(findMap(firstPurchaseMap, secondBread));
+            findAndShow(firstPurchaseMap, secondBread, Constants.FIRST_FIND);
 
             System.out.println(Constants.DELETE);
-            deleteMap(firstPurchaseMap, Constants.MEAT, WeekDay.MONDAY);
-            deleteMap(lastPurchaseMap, Constants.NO_NAME, WeekDay.FRIDAY);
 
-            System.out.println(Constants.AFTER_DELETING);
-            printMap(firstPurchaseMap);
-            System.out.println(Constants.AFTER_DELETING);
-            printMap(lastPurchaseMap);
+            removeEntries(firstPurchaseMap, new EntryChecker<Purchase, WeekDay>() {
+                @Override
+                public boolean check(Map.Entry<Purchase, WeekDay> entry) {
+                    return entry.getKey().equals(firstBread);
+                }
+            });
+
+            removeEntries(lastPurchaseMap, new EntryChecker<Purchase, WeekDay>() {
+                @Override
+                public boolean check(Map.Entry<Purchase, WeekDay> entry) {
+                    return entry.getValue().equals(WeekDay.FRIDAY);
+                }
+            });
+
+            printMap(firstPurchaseMap, Constants.AFTER_DELETING);
+
+            printMap(lastPurchaseMap, Constants.AFTER_DELETING);
 
             System.out.println(Constants.TOTAL_COST);
             System.out.println(getTotalCost(pricePurchases));
 
-            System.out.println(Constants.ENUM_MAP);
-            printMap(dayPurchaseMap);
+            printMap(dayPurchaseMap, Constants.ENUM_MAP);
 
-            System.out.println(getTotalCost(pricePurchases));
+            for (Map.Entry<WeekDay, List<Purchase>> entry :
+                    dayPurchaseMap.entrySet()) {
+                System.out.println(entry.getKey() + Constants.ARROW + getTotalCost(entry.getValue()));
+            }
 
-            System.out.println(Constants.MONDAY + Constants.ARROW + findMap(dayPurchaseMap, WeekDay.MONDAY));
+            findAndShow(dayPurchaseMap, WeekDay.MONDAY, Constants.PURCHASE_IN_MONDAY);
         } catch (FileNotFoundException e) {
             System.out.println(Constants.FILE_NOT_FOUND);
         }
     }
 
-    private static <K, V> void printMap(Map<K, V> map) {
+    private static <K, V> void printMap(Map<K, V> map, String message) {
+        System.out.println(message);
         for (Map.Entry<K, V> entry :
                 map.entrySet()) {
             System.out.println(entry.getKey() + Constants.ARROW + entry.getValue());
         }
     }
 
-    private static <K, V> String findMap(Map<K, V> map, K key) {
+    private static <K, V> String findAndShow(Map<K, V> map, K key, String header) {
+        System.out.println(header);
+        if (map.get(key) == null) {
+            System.out.println("Value of key = null");
+        }
         return String.valueOf(map.get(key));
     }
 
-    private static <K extends Purchase, V> void deleteMap(Map<K, V> map, String name, WeekDay weekDay) {
+    private static <K, V> void removeEntries(Map<K, V> map, EntryChecker<K, V> entryChecker) {
         for (Iterator<Map.Entry<K, V>> itr = map.entrySet().iterator(); itr.hasNext(); ) {
             Map.Entry<K, V> entry = itr.next();
-            K key = entry.getKey();
-            V value = entry.getValue();
-            if (key.getName().equals(name) || value.equals(weekDay)) {
+            if (entryChecker.check(entry)) {
                 itr.remove();
             }
         }
     }
 
-    private static Byn getTotalCost(List<? extends Purchase> list){
+    private static Byn getTotalCost(List<? extends Purchase> purchase) {
         Byn totalCost = new Byn();
-        for(Purchase purchase : list){
-            totalCost = totalCost.add(purchase.getCost());
+        for (Purchase pur : purchase) {
+            totalCost = totalCost.add(pur.getCost());
         }
         return totalCost;
     }
+
+
 }
