@@ -1,10 +1,10 @@
-import by.gsu.epamlab.Beans.Constants;
-import by.gsu.epamlab.Beans.EntryChecker;
-import by.gsu.epamlab.Beans.PurchaseFactory;
-import by.gsu.epamlab.Beans.WeekDay;
-import by.gsu.epamlab.Model.Byn;
-import by.gsu.epamlab.Model.PricePurchase;
-import by.gsu.epamlab.Model.Purchase;
+import by.gsu.epamlab.Constants;
+import by.gsu.epamlab.beans.EntryChecker;
+import by.gsu.epamlab.beans.PurchaseFactory;
+import by.gsu.epamlab.beans.WeekDay;
+import by.gsu.epamlab.model.Byn;
+import by.gsu.epamlab.model.PricePurchase;
+import by.gsu.epamlab.model.Purchase;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,9 +22,12 @@ public class Runner {
             while (sc.hasNext()) {
                 Purchase purchase = PurchaseFactory.getPurchaseFromFactory(sc);
                 WeekDay weekDay = WeekDay.valueOf(sc.nextLine());
-                firstPurchaseMap.putIfAbsent(purchase, weekDay);
-                lastPurchaseMap.putIfAbsent(purchase, weekDay);
-                dayPurchaseMap.putIfAbsent(weekDay, new ArrayList<>());
+                firstPurchaseMap.put(purchase, weekDay);
+
+                lastPurchaseMap.put(purchase, weekDay);
+                if (dayPurchaseMap.get(weekDay) == null) {
+                    dayPurchaseMap.put(weekDay, new ArrayList<>());
+                }
                 dayPurchaseMap.get(weekDay).add(purchase);
 
                 if (purchase instanceof PricePurchase) {
@@ -45,8 +48,6 @@ public class Runner {
 
             findAndShow(lastPurchaseMap, secondBread, Constants.LAST_FIND);
 
-            findAndShow(firstPurchaseMap, secondBread, Constants.FIRST_FIND);
-
             System.out.println(Constants.DELETE);
 
             removeEntries(firstPurchaseMap, new EntryChecker<Purchase, WeekDay>() {
@@ -63,14 +64,29 @@ public class Runner {
                 }
             });
 
+            removeEntries(dayPurchaseMap, new EntryChecker<WeekDay, List<Purchase>>() {
+                @Override
+                public boolean check(Map.Entry<WeekDay, List<Purchase>> entry) {
+                    boolean flag = false;
+                    for (Purchase purchase :
+                            entry.getValue()) {
+                        if (purchase.getName().equals("milk")) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    return flag;
+                }
+            });
+
             printMap(firstPurchaseMap, Constants.AFTER_DELETING);
 
             printMap(lastPurchaseMap, Constants.AFTER_DELETING);
 
+            printMap(dayPurchaseMap, Constants.ENUM_MAP);
+
             System.out.println(Constants.TOTAL_COST);
             System.out.println(getTotalCost(pricePurchases));
-
-            printMap(dayPurchaseMap, Constants.ENUM_MAP);
 
             for (Map.Entry<WeekDay, List<Purchase>> entry :
                     dayPurchaseMap.entrySet()) {
@@ -91,12 +107,10 @@ public class Runner {
         }
     }
 
-    private static <K, V> String findAndShow(Map<K, V> map, K key, String header) {
+    private static <K, V> void findAndShow(Map<K, V> map, K key, String header) {
         System.out.println(header);
-        if (map.get(key) == null) {
-            System.out.println("Value of key = null");
-        }
-        return String.valueOf(map.get(key));
+        V value = map.get(key);
+        System.out.println(value != null ? value : Constants.VALUE_NOT_FOUND);
     }
 
     private static <K, V> void removeEntries(Map<K, V> map, EntryChecker<K, V> entryChecker) {
@@ -115,6 +129,4 @@ public class Runner {
         }
         return totalCost;
     }
-
-
 }

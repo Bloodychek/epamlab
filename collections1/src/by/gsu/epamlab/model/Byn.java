@@ -1,6 +1,6 @@
-package by.gsu.epamlab.Model;
+package by.gsu.epamlab.model;
 
-import by.gsu.epamlab.Beans.Constants;
+import by.gsu.epamlab.Constants;
 import by.gsu.epamlab.RoundMethod;
 
 public class Byn implements Comparable<Byn> {
@@ -20,10 +20,6 @@ public class Byn implements Comparable<Byn> {
 
     public Byn mul(Byn byn) {
         return new Byn(kopecks * byn.kopecks);
-    }
-
-    public Byn div(Byn byn) {
-        return new Byn(kopecks / byn.kopecks);
     }
 
     public Byn add(Byn byn) {
@@ -50,10 +46,6 @@ public class Byn implements Comparable<Byn> {
         return new Byn(roundMethod.round(kopecks * value, d));
     }
 
-    public Byn div(double value, RoundMethod roundMethod, int d) {
-        return new Byn(mul(1.0 / value, roundMethod, d));
-    }
-
     public Byn round(RoundMethod roundMethod, int d) {
         return new Byn(roundMethod.round(kopecks, d));
     }
@@ -70,7 +62,7 @@ public class Byn implements Comparable<Byn> {
 
     @Override
     public String toString() {
-        return String.format(Constants.FORMAT, (kopecks / 100), (kopecks % 100));
+        return String.format(Constants.FORMAT, kopecks / 100, kopecks % 100);
     }
 
     @Override

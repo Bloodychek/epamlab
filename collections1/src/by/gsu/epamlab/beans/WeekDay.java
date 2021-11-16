@@ -1,4 +1,4 @@
-package by.gsu.epamlab.Beans;
+package by.gsu.epamlab.beans;
 
 public enum WeekDay {
     SUNDAY,

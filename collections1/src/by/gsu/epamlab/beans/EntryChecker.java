@@ -1,6 +1,4 @@
-package by.gsu.epamlab.Beans;
-
-import by.gsu.epamlab.Model.Purchase;
+package by.gsu.epamlab.beans;
 
 import java.util.Map;
 

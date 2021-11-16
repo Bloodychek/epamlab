@@ -1,6 +1,6 @@
-package by.gsu.epamlab.Model;
+package by.gsu.epamlab.model;
 
-import by.gsu.epamlab.Beans.Constants;
+import by.gsu.epamlab.Constants;
 
 import java.util.Scanner;
 
@@ -74,8 +74,7 @@ public class Purchase {
     }
 
     public Byn getCost() {
-        Byn byn = new Byn(price);
-        return byn.mul(number);
+        return price.mul(number);
     }
 
     public int hashCode() {

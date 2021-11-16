@@ -1,7 +1,8 @@
-package by.gsu.epamlab.Beans;
+package by.gsu.epamlab.beans;
 
-import by.gsu.epamlab.Model.PricePurchase;
-import by.gsu.epamlab.Model.Purchase;
+import by.gsu.epamlab.Constants;
+import by.gsu.epamlab.model.PricePurchase;
+import by.gsu.epamlab.model.Purchase;
 
 import java.util.Scanner;
 
@@ -13,11 +14,8 @@ public class PurchaseFactory {
         Purchase purchase;
         if (count == 3) {
             purchase = new Purchase(elements[0], Integer.parseInt(elements[1]), Integer.parseInt(elements[2]));
-        } else if (count == 4){
+        } else {
             purchase = new PricePurchase(elements[0], Integer.parseInt(elements[1]), Integer.parseInt(elements[2]), Integer.parseInt(elements[3]));
-        }
-        else {
-            throw new RuntimeException();
         }
         return purchase;
     }

@@ -1,10 +1,6 @@
-package by.gsu.epamlab.Model;
+package by.gsu.epamlab.model;
 
-import by.gsu.epamlab.Beans.Constants;
-import by.gsu.epamlab.Model.Byn;
-import by.gsu.epamlab.Model.Purchase;
-
-import java.util.Scanner;
+import by.gsu.epamlab.Constants;
 
 public class PricePurchase extends Purchase {
     private Byn discount;
@@ -26,6 +22,6 @@ public class PricePurchase extends Purchase {
 
     @Override
     public Byn getCost() {
-        return super.getCost().sub(new Byn(discount).mul(getNumber()));
+        return super.getCost().sub(discount.mul(getNumber()));
     }
 }
