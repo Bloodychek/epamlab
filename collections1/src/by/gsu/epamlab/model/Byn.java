@@ -4,7 +4,7 @@ import by.gsu.epamlab.Constants;
 import by.gsu.epamlab.RoundMethod;
 
 public class Byn implements Comparable<Byn> {
-    private int kopecks;
+    private final int kopecks;
 
     public Byn(int value) {
         this.kopecks = value;
