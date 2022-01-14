@@ -4,12 +4,9 @@ public class Segment implements Comparable<Segment> {
     private int len;
     private int num;
 
-    public Segment(int len, int num){
+    public Segment(int len) {
         this.len = len;
-        this.num = num;
-    }
-
-    public Segment(long round) {
+        num = 1;
     }
 
     public int getLen() {
@@ -33,7 +30,7 @@ public class Segment implements Comparable<Segment> {
         return len + Constants.DELIMITER + num;
     }
 
-    public int compareTo(Segment o){
+    public int compareTo(Segment o) {
         return len - o.len;
     }
 }
