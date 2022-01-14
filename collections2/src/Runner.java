@@ -17,7 +17,7 @@ public class Runner {
                 segment = new Segment((int) Math.round(getLen(elements)));
 
                 int index = Collections.binarySearch(segmentList, segment);
-                if (index > -1) {
+                if (index >= 0) {
                     segmentList.get(index).setNum(segmentList.get(index).getNum() + 1);
                 }
                 else {
