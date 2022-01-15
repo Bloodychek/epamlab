@@ -1,5 +1,6 @@
-import by.gsu.epamlab.Constants;
-import by.gsu.epamlab.NumLen;
+import by.gsu.epamlab.beans.Constants;
+import by.gsu.epamlab.beans.NumLen;
+import by.gsu.epamlab.comparators.NumLenComparator;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,23 +14,17 @@ public class Runner {
             while (sc.hasNext()) {
                 String line = sc.nextLine();
                 String[] elements = line.trim().split(Constants.REGEX);
-                NumLen numLen = new NumLen((int) Math.round(getLen(elements)));
+                NumLen numLen = new NumLen(getLen(elements));
 
                 int index = Collections.binarySearch(numLenList, numLen);
                 if (index >= 0) {
                     numLenList.get(index).incNum();
-                }
-                else {
+                } else {
                     numLenList.add(-index - 1, numLen);
                 }
             }
 
-            numLenList.sort(new Comparator<NumLen>() {
-                @Override
-                public int compare(NumLen o1, NumLen o2) {
-                    return o2.getNum() - o1.getNum();
-                }
-            });
+            numLenList.sort(new NumLenComparator());
 
             printList(numLenList);
 
@@ -38,10 +33,10 @@ public class Runner {
         }
     }
 
-    private static double getLen(String[] elements) {
+    private static int getLen(String[] elements) {
         double firstTerm = Double.parseDouble(elements[1]) - Double.parseDouble(elements[3]);
         double secondTerm = Double.parseDouble(elements[2]) - Double.parseDouble(elements[4]);
-        return Math.sqrt(firstTerm * firstTerm + secondTerm * secondTerm);
+        return (int) Math.round(Math.sqrt(firstTerm * firstTerm + secondTerm * secondTerm));
     }
 
     private static void printList(List<NumLen> numLenList) {

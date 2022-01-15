@@ -1,4 +1,4 @@
-package by.gsu.epamlab;
+package by.gsu.epamlab.beans;
 
 public class NumLen implements Comparable<NumLen> {
     private final int len;
