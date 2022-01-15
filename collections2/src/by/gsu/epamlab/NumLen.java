@@ -1,20 +1,16 @@
 package by.gsu.epamlab;
 
-public class Segment implements Comparable<Segment> {
-    private int len;
+public class NumLen implements Comparable<NumLen> {
+    private final int len;
     private int num;
 
-    public Segment(int len) {
+    public NumLen(int len) {
         this.len = len;
         num = 1;
     }
 
     public int getLen() {
         return len;
-    }
-
-    public void setLen(int len) {
-        this.len = len;
     }
 
     public int getNum() {
@@ -25,12 +21,16 @@ public class Segment implements Comparable<Segment> {
         this.num = num;
     }
 
+    public void incNum() {
+        num++;
+    }
+
     @Override
     public String toString() {
         return len + Constants.DELIMITER + num;
     }
 
-    public int compareTo(Segment o) {
-        return len - o.len;
+    public int compareTo(NumLen numLen) {
+        return len - numLen.len;
     }
 }

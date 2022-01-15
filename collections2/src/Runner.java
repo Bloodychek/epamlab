@@ -1,5 +1,5 @@
 import by.gsu.epamlab.Constants;
-import by.gsu.epamlab.Segment;
+import by.gsu.epamlab.NumLen;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -8,31 +8,30 @@ import java.util.*;
 public class Runner {
 
     public static void main(String[] args) {
-        List<Segment> segmentList = new ArrayList<>();
         try (Scanner sc = new Scanner(new FileReader(Constants.FILE_NAME))) {
-            Segment segment;
+            List<NumLen> numLenList = new ArrayList<>();
             while (sc.hasNext()) {
                 String line = sc.nextLine();
-                String[] elements = line.trim().substring(1).trim().split(Constants.REGEX);
-                segment = new Segment((int) Math.round(getLen(elements)));
+                String[] elements = line.trim().split(Constants.REGEX);
+                NumLen numLen = new NumLen((int) Math.round(getLen(elements)));
 
-                int index = Collections.binarySearch(segmentList, segment);
+                int index = Collections.binarySearch(numLenList, numLen);
                 if (index >= 0) {
-                    segmentList.get(index).setNum(segmentList.get(index).getNum() + 1);
+                    numLenList.get(index).incNum();
                 }
                 else {
-                    segmentList.add(segment);
+                    numLenList.add(-index - 1, numLen);
                 }
             }
 
-            Collections.sort(segmentList, new Comparator<Segment>() {
+            numLenList.sort(new Comparator<NumLen>() {
                 @Override
-                public int compare(Segment o1, Segment o2) {
+                public int compare(NumLen o1, NumLen o2) {
                     return o2.getNum() - o1.getNum();
                 }
             });
 
-            printList(segmentList);
+            printList(numLenList);
 
         } catch (FileNotFoundException e) {
             System.out.println(Constants.FILE_NOT_FOUND);
@@ -40,15 +39,15 @@ public class Runner {
     }
 
     private static double getLen(String[] elements) {
-        double firstTerm = Double.parseDouble(elements[0]) - Double.parseDouble(elements[2]);
-        double secondTerm = Double.parseDouble(elements[1]) - Double.parseDouble(elements[3]);
+        double firstTerm = Double.parseDouble(elements[1]) - Double.parseDouble(elements[3]);
+        double secondTerm = Double.parseDouble(elements[2]) - Double.parseDouble(elements[4]);
         return Math.sqrt(firstTerm * firstTerm + secondTerm * secondTerm);
     }
 
-    private static void printList(List<Segment> segmentList) {
-        for (Segment segment :
-                segmentList) {
-            System.out.println(segment);
+    private static void printList(List<NumLen> numLenList) {
+        for (NumLen len :
+                numLenList) {
+            System.out.println(len);
         }
     }
 }
