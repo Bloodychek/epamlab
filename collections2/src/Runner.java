@@ -1,5 +1,4 @@
 import by.gsu.epamlab.beans.Constants;
-import by.gsu.epamlab.beans.NumLen;
 import by.gsu.epamlab.comparators.NumLenComparator;
 
 import java.io.FileNotFoundException;
@@ -10,23 +9,26 @@ public class Runner {
 
     public static void main(String[] args) {
         try (Scanner sc = new Scanner(new FileReader(Constants.FILE_NAME))) {
-            List<NumLen> numLenList = new ArrayList<>();
+            Map<Integer, Integer> numLenMap = new HashMap<>();
             while (sc.hasNext()) {
                 String line = sc.nextLine();
                 String[] elements = line.trim().split(Constants.REGEX);
-                NumLen numLen = new NumLen(getLen(elements));
+                int len = getLen(elements);
 
-                int index = Collections.binarySearch(numLenList, numLen);
-                if (index >= 0) {
-                    numLenList.get(index).incNum();
+                int num = 0;
+                if (numLenMap.get(len) != null) {
+                    num = numLenMap.get(len) + 1;
+                    numLenMap.put(len, num);
                 } else {
-                    numLenList.add(-index - 1, numLen);
+                    num = 1;
+                    numLenMap.put(len, num);
                 }
             }
 
-            numLenList.sort(new NumLenComparator());
+            List<Map.Entry<Integer, Integer>> numLen = new ArrayList<>(numLenMap.entrySet());
+            Collections.sort(numLen, new NumLenComparator());
 
-            printList(numLenList);
+            printList(numLen);
 
         } catch (FileNotFoundException e) {
             System.out.println(Constants.FILE_NOT_FOUND);
@@ -39,10 +41,10 @@ public class Runner {
         return (int) Math.round(Math.sqrt(firstTerm * firstTerm + secondTerm * secondTerm));
     }
 
-    private static void printList(List<NumLen> numLenList) {
-        for (NumLen len :
+    private static void printList(List<Map.Entry<Integer, Integer>> numLenList) {
+        for (Map.Entry<Integer, Integer> len :
                 numLenList) {
-            System.out.println(len);
+            System.out.println(len.getKey() + Constants.DELIMITER + len.getValue());
         }
     }
 }
