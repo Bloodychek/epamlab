@@ -18,11 +18,10 @@ public class Runner {
                 int num = 0;
                 if (numLenMap.get(len) != null) {
                     num = numLenMap.get(len) + 1;
-                    numLenMap.put(len, num);
                 } else {
                     num = 1;
-                    numLenMap.put(len, num);
                 }
+                numLenMap.put(len, num);
             }
 
             List<Map.Entry<Integer, Integer>> numLen = new ArrayList<>(numLenMap.entrySet());
@@ -42,9 +41,9 @@ public class Runner {
     }
 
     private static void printList(List<Map.Entry<Integer, Integer>> numLenList) {
-        for (Map.Entry<Integer, Integer> len :
+        for (Map.Entry<Integer, Integer> entry :
                 numLenList) {
-            System.out.println(len.getKey() + Constants.DELIMITER + len.getValue());
+            System.out.println(entry.getKey() + Constants.DELIMITER + entry.getValue());
         }
     }
 }
