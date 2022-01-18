@@ -15,19 +15,18 @@ public class Runner {
                 String[] elements = line.trim().split(Constants.REGEX);
                 int len = getLen(elements);
 
-                int num = 0;
-                if (numLenMap.get(len) != null) {
-                    num = numLenMap.get(len) + 1;
-                } else {
-                    num = 1;
+                Integer value = numLenMap.get(len);
+                if (value == null) {
+                    value = 0;
                 }
-                numLenMap.put(len, num);
+                numLenMap.put(len, value + 1);
+
             }
 
-            List<Map.Entry<Integer, Integer>> numLen = new ArrayList<>(numLenMap.entrySet());
-            Collections.sort(numLen, new NumLenComparator());
+            SortedMap<Integer, Integer> sortedMapNumLen = new TreeMap<Integer, Integer>(new NumLenComparator(numLenMap));
+            sortedMapNumLen.putAll(numLenMap);
 
-            printList(numLen);
+            printCollection(sortedMapNumLen.entrySet());
 
         } catch (FileNotFoundException e) {
             System.out.println(Constants.FILE_NOT_FOUND);
@@ -40,10 +39,9 @@ public class Runner {
         return (int) Math.round(Math.sqrt(firstTerm * firstTerm + secondTerm * secondTerm));
     }
 
-    private static void printList(List<Map.Entry<Integer, Integer>> numLenList) {
-        for (Map.Entry<Integer, Integer> entry :
-                numLenList) {
-            System.out.println(entry.getKey() + Constants.DELIMITER + entry.getValue());
+    private static void printCollection(Collection<Map.Entry<Integer, Integer>> entrySet) {
+        for (Map.Entry<Integer, Integer> pair : entrySet) {
+            System.out.println(pair.getKey() + Constants.DELIMITER + pair.getValue());
         }
     }
 }
