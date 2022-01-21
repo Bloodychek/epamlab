@@ -2,11 +2,11 @@ package by.gsu.epamlab.beans;
 
 import by.gsu.epamlab.beans.Constants;
 
-public class Frequency {
+public class NumLen {
     private int len;
     private int num;
 
-    public Frequency(int len, int num) {
+    public NumLen(int len, int num) {
         this.len = len;
         this.num = num;
     }

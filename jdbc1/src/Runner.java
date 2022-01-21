@@ -1,7 +1,6 @@
 import by.gsu.epamlab.beans.Constants;
-import by.gsu.epamlab.beans.Frequency;
+import by.gsu.epamlab.beans.NumLen;
 
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,28 +9,31 @@ public class Runner {
 
     public static void main(String[] args) {
         try {
-            try (Connection conn = DriverManager.getConnection(Constants.URL, Constants.USER, Constants.PASSWORD)) {
-                Statement statement = conn.createStatement();
-                statement.executeUpdate(Constants.DELETE);
-                List<Frequency> frequencyList = new ArrayList<>();
-                ResultSet resultSet = statement.executeQuery(Constants.SELECT);
-                while (resultSet.next()) {
-                    Frequency frequency = new Frequency(resultSet.getInt(1), resultSet.getInt(2));
-                    frequencyList.add(frequency);
-                    System.out.println(frequency);
+            try (Connection conn = DriverManager.getConnection(Constants.URL, Constants.USER, Constants.PASSWORD); Statement statement = conn.createStatement()) {
+                statement.executeUpdate(Constants.DELETE_FREQUENCIES);
+                List<NumLen> frequencyList = new ArrayList<>();
+                try (ResultSet resultSet = statement.executeQuery(Constants.SELECT_COORDINATES)) {
+                    while (resultSet.next()) {
+                        NumLen numLen = new NumLen(resultSet.getInt(Constants.LEN_IND), resultSet.getInt(Constants.NUM_IND));
+                        frequencyList.add(numLen);
+                        System.out.println(numLen);
+                    }
                 }
 
-                PreparedStatement preparedStatement = conn.prepareStatement(Constants.INSERT);
-                for (Frequency frequency :
-                        frequencyList) {
-                    preparedStatement.setInt(1, frequency.getLen());
-                    preparedStatement.setInt(2, frequency.getNum());
-                    preparedStatement.executeUpdate();
+                try (PreparedStatement preparedStatement = conn.prepareStatement(Constants.INSERT_FREQUENCIES)) {
+                    for (NumLen numLen :
+                            frequencyList) {
+                        preparedStatement.setInt(Constants.LEN_IND, numLen.getLen());
+                        preparedStatement.setInt(Constants.NUM_IND, numLen.getNum());
+                        preparedStatement.addBatch();
+                    }
+                    preparedStatement.executeBatch();
                 }
 
-                resultSet = statement.executeQuery(Constants.SELECT_LEN);
-                while (resultSet.next()) {
-                    System.out.println(resultSet.getInt(1) + Constants.DELIMITER + resultSet.getInt(2));
+                try (ResultSet resultSet = statement.executeQuery(Constants.SELECT_FREQUENCIES)) {
+                    while (resultSet.next()) {
+                        System.out.println(resultSet.getInt(Constants.LEN_IND) + Constants.DELIMITER + resultSet.getInt(Constants.NUM_IND));
+                    }
                 }
             }
         } catch (SQLException e) {
