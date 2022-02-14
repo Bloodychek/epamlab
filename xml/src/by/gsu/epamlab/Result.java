@@ -20,9 +20,9 @@ public class Result {
         this.mark = mark;
     }
 
-   public Result(){
+    public Result() {
         this(null, null, null, 0);
-   }
+    }
 
     public String getLogin() {
         return login;
@@ -56,16 +56,16 @@ public class Result {
         this.mark = mark;
     }
 
-    public String outMark(){
+    public String outMark() {
         return mark / Constants.TEN + Constants.DOT + mark % Constants.TEN;
     }
 
-    private String outDate(){
+    private String outDate() {
         return FORMAT_DATE.format(date);
     }
 
     @Override
     public String toString() {
-        return login + test + Constants.DELIMITER + outDate() + Constants.DELIMITER + outMark() + Constants.DELIMITER;
+        return login + Constants.DELIMITER + test + Constants.DELIMITER + outDate() + Constants.DELIMITER + outMark() + Constants.DELIMITER;
     }
 }

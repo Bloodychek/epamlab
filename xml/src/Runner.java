@@ -21,8 +21,7 @@ public class Runner {
             reader.setContentHandler(handler);
             reader.parse(Constants.PATH);
 
-            for (Result result :
-                    handler.getResult()) {
+            for (Result result : handler.getResult()) {
                 System.out.println(result);
             }
         } catch (IOException | SAXException e) {

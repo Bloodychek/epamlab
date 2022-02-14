@@ -6,8 +6,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class ResultHandler extends DefaultHandler {
         return results;
     }
 
-    private void setMark(String mark){
+    private void setMark(String mark) {
         String[] marks = mark.split(Constants.REGULAR_DOT);
         currentResult.setMark(Integer.parseInt(marks[Constants.NULL]) * Constants.TEN + Integer.parseInt(marks[Constants.ONE]));
     }
@@ -47,8 +45,8 @@ public class ResultHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) {
         String getStr = new String(ch, start, length).trim();
-        if (currentEnum != null) {
-            if (currentEnum == ResultEnum.LOGIN) {
+        if (!getStr.isEmpty()) {
+            if (currentEnum != null && currentEnum == ResultEnum.LOGIN) {
                 currentLogin = getStr;
             }
         }
