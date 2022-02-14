@@ -45,8 +45,8 @@ public class ResultHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) {
         String getStr = new String(ch, start, length).trim();
-        if (!getStr.isEmpty()) {
-            if (currentEnum != null && currentEnum == ResultEnum.LOGIN) {
+        if (currentEnum == ResultEnum.LOGIN) {
+            if (!getStr.isEmpty()) {
                 currentLogin = getStr;
             }
         }
