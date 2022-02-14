@@ -2,6 +2,7 @@ package by.gsu.epamlab;
 
 import by.gsu.epamlab.beans.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Result {
@@ -9,6 +10,8 @@ public class Result {
     private String test;
     private Date date;
     private int mark;
+
+    private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd.MM.yyyy");
 
     public Result(String login, String test, Date date, int mark) {
         this.login = login;
@@ -18,7 +21,7 @@ public class Result {
     }
 
    public Result(){
-        this("", "", new Date(System.currentTimeMillis()), 0);
+        this(null, null, null, 0);
    }
 
     public String getLogin() {
@@ -54,11 +57,15 @@ public class Result {
     }
 
     public String outMark(){
-        return mark / 10 + Constants.DOT + mark % 10;
+        return mark / Constants.TEN + Constants.DOT + mark % Constants.TEN;
+    }
+
+    private String outDate(){
+        return FORMAT_DATE.format(date);
     }
 
     @Override
     public String toString() {
-        return login + Constants.DELIMITER + test + Constants.DELIMITER + date + Constants.DELIMITER + outMark() + Constants.DELIMITER;
+        return login + test + Constants.DELIMITER + outDate() + Constants.DELIMITER + outMark() + Constants.DELIMITER;
     }
 }
