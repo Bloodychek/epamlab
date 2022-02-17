@@ -27,12 +27,8 @@ public class ResultHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         currentEnum = ResultEnum.valueOf(localName.toUpperCase());
         if (currentEnum == ResultEnum.TEST) {
-            Result currentResult = new Result();
-            currentResult.setLogin(currentLogin);
-            currentResult.setTest(attributes.getValue(Constants.NAME_POS));
-            currentResult.setDate(attributes.getValue(Constants.DATE_POS));
-            currentResult.setMark((attributes.getValue(Constants.MARK_POS)));
-            results.add(currentResult);
+            results.add(new Result(currentLogin, attributes.getValue(Constants.NAME_POS),
+                    attributes.getValue(Constants.DATE_POS), attributes.getValue(Constants.MARK_POS)));
         }
     }
 

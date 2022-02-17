@@ -12,13 +12,17 @@ public class Result {
     private Date date;
     private int mark;
 
-    private static final SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+    private static final SimpleDateFormat OUTPUT_DATE_FORMAT = new SimpleDateFormat(Constants.DATE_FORMAT);
 
     public Result(String login, String test, Date date, int mark) {
         this.login = login;
         this.test = test;
         this.date = date;
         this.mark = mark;
+    }
+
+    public Result(String login, String test, String date, String mark) {
+        this(login, test, Date.valueOf(date), (int)Double.parseDouble(mark) * Constants.TEN);
     }
 
     public Result() {
@@ -49,10 +53,6 @@ public class Result {
         this.date = date;
     }
 
-    public void setDate(String date) {
-        this.date = Date.valueOf(date);
-    }
-
     public int getMark() {
         return mark;
     }
@@ -61,20 +61,16 @@ public class Result {
         this.mark = mark;
     }
 
-    public void setMark(String mark) {
-        this.mark = Integer.parseInt(mark.replace(Constants.DOT, Constants.EMPTY));
-    }
-
     public String outMark() {
         return mark / Constants.TEN + Constants.DOT + mark % Constants.TEN;
     }
 
-    private String getStringMark() {
+    private String getSimpleDate() {
         return OUTPUT_DATE_FORMAT.format(date);
     }
 
     @Override
     public String toString() {
-        return login + Constants.DELIMITER + test + Constants.DELIMITER + getStringMark() + Constants.DELIMITER + outMark() + Constants.DELIMITER;
+        return login + Constants.DELIMITER + test + Constants.DELIMITER + getSimpleDate() + Constants.DELIMITER + outMark() + Constants.DELIMITER;
     }
 }
