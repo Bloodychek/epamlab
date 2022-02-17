@@ -30,7 +30,8 @@
     </xsd:complexType>
     <xsd:simpleType name="Mark">
         <xsd:restriction base="xsd:decimal">
-            <xsd:pattern value="[1-9][0]?[.][0-9]"/>
+            <xsd:pattern value="\d\.\d|10\.0" />
+
         </xsd:restriction>
     </xsd:simpleType>
 </xsd:schema>
