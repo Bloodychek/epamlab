@@ -22,7 +22,7 @@ public class Result {
     }
 
     public Result(String login, String test, String date, String mark) {
-        this(login, test, Date.valueOf(date), (int)Double.parseDouble(mark) * Constants.TEN);
+        this(login, test, Date.valueOf(date), (int) Double.parseDouble(mark) * Constants.TEN);
     }
 
     public Result() {
