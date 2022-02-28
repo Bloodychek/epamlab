@@ -22,7 +22,7 @@ public class Result {
     }
 
     public Result(String login, String test, String date, String mark) {
-        this(login, test, Date.valueOf(date), (int) Double.parseDouble(mark) * Constants.TEN);
+        this(login, test, Date.valueOf(date), (int) Double.parseDouble(mark) * Constants.MULTIPLIER);
     }
 
     public Result() {
@@ -62,7 +62,7 @@ public class Result {
     }
 
     public String outMark() {
-        return mark / Constants.TEN + Constants.DOT + mark % Constants.TEN;
+        return mark / Constants.MULTIPLIER + Constants.DOT + mark % Constants.MULTIPLIER;
     }
 
     private String getSimpleDate() {

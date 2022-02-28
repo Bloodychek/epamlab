@@ -8,5 +8,5 @@ public class Constants {
     public final static int NAME_POS = 0;
     public final static int DATE_POS = 1;
     public final static int MARK_POS = 2;
-    public final static int TEN = 10;
+    public final static int MULTIPLIER = 10;
 }
